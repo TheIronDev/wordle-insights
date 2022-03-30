@@ -1,0 +1,12 @@
+.container {
+    align-items: center;
+    background: #fff;
+    border: 1px solid #dfdfdf;
+    box-shadow: 1px 1px 3px -1px #666;
+    display: flex;
+    font-size: 3rem;
+    justify-content: center;
+    margin: 1rem;
+    height: 5rem;
+    width: 5rem
+}

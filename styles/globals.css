@@ -6,6 +6,24 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+h1 {margin: 0}
+
+nav {
+  background: #1D95EC;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  position: absolute;
+  top: 0;
+  padding-left: 1rem;
+  width: 100%;
+}
+
+main {
+  margin-top: 3rem; /** Spacing for top navbar */
+}
+
 a {
   color: inherit;
   text-decoration: none;
