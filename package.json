@@ -9,7 +9,7 @@
     "lint": "next lint",
     "build": "next build",
     "serve": "npm run build && firebase emulators:start --only functions,hosting",
-    "deploy": "firebase deploy --only functions,hosting"
+    "deploy": "firebase deploy"
   },
   "dependencies": {
     "firebase-admin": "^10.0.2",
