@@ -2,13 +2,18 @@
   "name": "wordle-insights",
   "version": "0.1.0",
   "private": true,
+  "main": "index.js",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build": "next build",
+    "serve": "npm run build && firebase emulators:start --only functions,hosting",
+    "deploy": "firebase deploy --only functions,hosting"
   },
   "dependencies": {
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.19.0",
     "next": "12.1.2",
     "react": "18.0.0",
     "react-dom": "18.0.0"
