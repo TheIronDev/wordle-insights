@@ -30,6 +30,7 @@
       padding: 0;
    }
   .key {
+    font-size: 2rem;
     margin: .5rem .1rem;
   }
 }
