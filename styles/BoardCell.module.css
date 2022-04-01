@@ -11,6 +11,11 @@
     width: 5rem
 }
 
+.incorrect {background: #ddd}
+.correct {background: #00bb00;}
+.partial {background: #d9d914;}
+.default {}
+
 @media (max-width: 600px) {
     .container {
         box-shadow: 1px 1px 3px -1px #aaa;

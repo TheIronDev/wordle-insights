@@ -1,21 +1,70 @@
 import React, {FunctionComponent} from 'react'
 import RowComponent from './BoardRow'
-import {Cell} from './types'
+import {Cell, CellState} from './types'
 import styles from '../styles/Board.module.css'
+
+import {doc} from "firebase/firestore";
+import {db} from '../firebase'
+import {useDocumentData} from "react-firebase-hooks/firestore";
 
 
 type BoardProps = {
-    rows: number,
-    columns: number,
-    results: Cell[][]
+    gameId: string,
 };
 
-const BoardComponent: FunctionComponent<BoardProps> = (props) => (
-    <div className={styles.container}>
-        {Array.from({length: props.rows}, (value, index) => {
-            return <RowComponent key={index} columns={props.columns} results={props.results && props.results[index] || []} />
-        })}
-    </div>
-)
+function getCellState(hintState): CellState {
+    switch (hintState) {
+        case '0':
+            return CellState.INCORRECT;
+        case '1':
+            return CellState.PARTIAL;
+        case '2':
+            return CellState.CORRECT;
+        default:
+            return CellState.EMPTY;
+    }
+}
+
+function createResults(attemptChar: string, hintChar: string): Cell {
+    return {
+        value: attemptChar,
+        state: getCellState(hintChar) || CellState.EMPTY
+    } as Cell;
+}
+
+function createResultsRow(attempt: string, hintString: string): Cell[] {
+    const hintArray = hintString.split('');
+    return attempt.split('').map((attemptChar, colIndex) =>
+        createResults(attemptChar, hintArray[colIndex]));
+}
+
+function createResultsGrid(attempts: string[], hints: string[]): Cell[][] {
+    return attempts.map((attempt, rowIndex) => createResultsRow(attempt, hints[rowIndex] || '')
+    )
+}
+
+const BoardComponent: FunctionComponent<BoardProps> = ({gameId}) => {
+    const columns = 5;
+    const rows = 6;
+
+    let gameRef = doc(db, 'games', gameId);
+    const [game] = useDocumentData(gameRef);
+    if (!game) {
+        return <div></div>
+    }
+
+    const results: Cell[][] = [
+        ...createResultsGrid(game.attempts || [], game.attemptHints || []),
+        createResultsRow(game.currentAttempt?.value || '', '')
+    ];
+
+    return (
+        <div className={styles.container}>
+            {Array.from({length: rows}, (value, index) => {
+                return <RowComponent key={index} columns={columns} results={results && results[index] || []}/>
+            })}
+        </div>
+    )
+}
 
 export default BoardComponent

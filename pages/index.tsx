@@ -3,10 +3,13 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import GameComponent from '../components/Game'
 import styles from '../styles/Home.module.css'
-import {auth, googleAuthProvider} from '../firebase'
 import {signInWithPopup, signOut, onAuthStateChanged}  from "firebase/auth";
+import {auth, firestone, googleAuthProvider} from '../firebase'
+import {useCollectionData} from "react-firebase-hooks/firestore";
+
 
 type User = {
+    uid: string
     displayName: string
     isLoggedIn: boolean
 }
@@ -34,10 +37,11 @@ const Home: NextPage = (props) => {
       isLoggedIn: false,
   } as User);
   onAuthStateChanged(auth,(user) => {
-   setCurrentUser({displayName: user?.displayName || '', isLoggedIn: !!user} as User);
+   setCurrentUser({displayName: user?.displayName || '', isLoggedIn: !!user, uid: user?.uid} as User);
   });
 
   const userAuthNavBarSection = getUserAuthNavBar(currentUser);
+  const mainContent = currentUser && currentUser.uid ? <GameComponent uid={currentUser.uid} /> : <div>Login required</div>;
 
   return (
     <div className={styles.container}>
@@ -59,7 +63,7 @@ const Home: NextPage = (props) => {
       </nav>
 
       <main className={styles.main}>
-        <GameComponent />
+          {mainContent}
       </main>
     </div>
   )
