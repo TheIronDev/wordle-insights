@@ -4,8 +4,7 @@ import Head from 'next/head'
 import GameComponent from '../components/Game'
 import styles from '../styles/Home.module.css'
 import {signInWithPopup, signOut, onAuthStateChanged}  from "firebase/auth";
-import {auth, firestone, googleAuthProvider} from '../firebase'
-import {useCollectionData} from "react-firebase-hooks/firestore";
+import {auth, googleAuthProvider} from '../firebase'
 
 
 type User = {
