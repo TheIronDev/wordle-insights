@@ -12,7 +12,7 @@ type BoardProps = {
     gameId: string,
 };
 
-function getCellState(hintState): CellState {
+function getCellState(hintState: string): CellState {
     switch (hintState) {
         case '0':
             return CellState.INCORRECT;

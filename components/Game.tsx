@@ -12,8 +12,6 @@ type GameProps = {
     uid: string
 };
 
-const results:Cell[][] = [[],[]]
-
 const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
     let profileRef = doc(db, 'profiles', uid);
     const [profile] = useDocumentData(profileRef);
