@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from 'react'
 import RowComponent from './BoardRow'
-import {Cell, CellState} from './types'
+import {Cell, CellState, Game} from './types'
 import styles from '../styles/Board.module.css'
 
 import {doc} from "firebase/firestore";
@@ -9,7 +9,7 @@ import {useDocumentData} from "react-firebase-hooks/firestore";
 
 
 type BoardProps = {
-    gameId: string,
+    game: Game,
 };
 
 function getCellState(hintState: string): CellState {
@@ -43,19 +43,13 @@ function createResultsGrid(attempts: string[], hints: string[]): Cell[][] {
     )
 }
 
-const BoardComponent: FunctionComponent<BoardProps> = ({gameId}) => {
+const BoardComponent: FunctionComponent<BoardProps> = ({game}) => {
     const columns = 5;
     const rows = 6;
 
-    let gameRef = doc(db, 'games', gameId);
-    const [game] = useDocumentData(gameRef);
-    if (!game) {
-        return <div></div>
-    }
-
     const results: Cell[][] = [
-        ...createResultsGrid(game.attempts || [], game.attemptHints || []),
-        createResultsRow(game.currentAttempt?.value || '', '')
+        ...createResultsGrid(game.attempts || [], game.hints || []),
+        createResultsRow(game.attempt?.value || '', '')
     ];
 
     return (

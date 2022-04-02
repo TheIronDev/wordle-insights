@@ -23,6 +23,7 @@
     margin: .5rem;
     min-width: 0;
     text-align: center;
+    text-transform: uppercase;
 }
 
 @media (max-width: 600px) {

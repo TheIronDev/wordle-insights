@@ -6,6 +6,7 @@
     display: flex;
     font-size: 3rem;
     justify-content: center;
+    text-transform: uppercase;
     margin: 1rem;
     height: 5rem;
     width: 5rem
