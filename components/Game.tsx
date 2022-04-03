@@ -3,7 +3,7 @@ import BoardComponent from './Board'
 import KeyboardComponent from "./Keyboard";
 import {Game, KeyboardHints, KeyboardKey, KeyboardKeyType} from './types'
 import styles from '../styles/Game.module.css'
-import {doc, setDoc} from "firebase/firestore";
+import {doc, DocumentData, DocumentReference, setDoc} from "firebase/firestore";
 import {db} from "../firebase";
 import {useDocumentData} from "react-firebase-hooks/firestore";
 
@@ -12,7 +12,7 @@ type GameProps = {
     uid: string
 };
 
-function onKeyClick(keyboardKey:KeyboardKey, gameData: Game, gameRef) {
+const onKeyClick = (keyboardKey:KeyboardKey, gameData: Game, gameRef: DocumentReference<DocumentData>) => {
     let attemptValue = gameData.attempt.value;
     let attempt = {...gameData.attempt}
     switch (keyboardKey.type) {
@@ -37,7 +37,7 @@ function onKeyClick(keyboardKey:KeyboardKey, gameData: Game, gameRef) {
         case KeyboardKeyType.UNKNOWN:
         default:
     }
-}
+};
 
 
 const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
