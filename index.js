@@ -1,16 +1,9 @@
-const { https } = require('firebase-functions')
-const { default: next } = require('next');
+const nextServer = require('./nextServer');
+const {gameAttempt, gameAttemptTest} = require('./game/functions');
 
-// Start writing Firebase Functions
-// https://firebase.google.com/docs/functions/typescript
+// Functions wired up to start nextjs server
+exports.nextServer = nextServer;
 
-const dev = process.env.NODE_ENV !== 'production';
-const conf = { distDir: '.next' };
-
-// NextJs Server
-const server = next({dev, conf,});
-const nextjsHandle = server.getRequestHandler();
-
-exports.nextServer = https.onRequest((req, res) => {
-  return server.prepare().then(() => nextjsHandle(req, res));
-});
+// Functions mapping game functionality
+exports.gameAttempt = gameAttempt;
+exports.gameAttemptTest = gameAttemptTest;
