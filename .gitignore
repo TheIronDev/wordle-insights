@@ -33,7 +33,6 @@ ui-debug.log
 # local env files
 .env*.local
 .firebase
-wordle-insights-firebase-adminsdk.json
 
 # vercel
 .vercel

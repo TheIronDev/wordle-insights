@@ -8,6 +8,7 @@ const conf = { distDir: '.next' };
 // NextJs Server
 const server = next({dev, conf,});
 const nextjsHandle = server.getRequestHandler();
-exports = https.onRequest((req, res) => {
+
+module.exports = https.onRequest((req, res) => {
   return server.prepare().then(() => nextjsHandle(req, res));
 });

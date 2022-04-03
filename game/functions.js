@@ -1,11 +1,10 @@
-const admin = require('firebase-admin/app');
+const {initializeApp, applicationDefault} = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
 const { https, firestore } = require('firebase-functions')
-const {createGame} = require('./createGame');
+const createGame = require('./createGame');
 
-const serviceAccount = require('../wordle-insights-firebase-adminsdk.json');
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
+initializeApp({
+    credential: applicationDefault(),
     databaseURL: "https://wordle-insights-default-rtdb.firebaseio.com"
 });
 const db = getFirestore();

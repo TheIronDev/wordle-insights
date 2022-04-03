@@ -1,4 +1,4 @@
-exports.createGame = (word, timestamp) => {
+module.exports = (word, timestamp) => {
    return {
        attempt: {
            value: '',

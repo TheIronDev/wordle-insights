@@ -6,7 +6,7 @@ import {getFirestore } from "firebase/firestore";
 const firebaseConfig = require('./firebaseConfig');
 
 // Initialize Firebase
-export const app = initializeApp({...firebaseConfig, projectId: firebaseConfig.projectId});
+export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth();
 export const googleAuthProvider = new GoogleAuthProvider();
