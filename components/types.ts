@@ -11,16 +11,22 @@ export type Cell = {
     state: CellState,
 };
 
+// Mapping of letters to their keyboard state
+export type KeyboardHints = {
+   [key: string]: string|undefined // INCORRECT, PARTIAL, CORRECT
+}
+
 export type Attempt = {
     value: string,
-    isChecking: false,
-    isError: false
+    isChecking: boolean,
+    isError: boolean
 }
 
 export type Game = {
     attempt: Attempt,
     attempts: string[],
     hints: string[],
+    keyboardHints: KeyboardHints
     isComplete: boolean,
     isWon: boolean,
 };
@@ -32,8 +38,16 @@ export enum KeyboardKeyType {
     SUBMIT
 }
 
+export enum KeyboardKeyStatus {
+   UNKNOWN,
+    INCORRECT,
+    PARTIAL,
+    CORRECT
+}
+
 export type KeyboardKey = {
     display: string,
     value: string,
     type: KeyboardKeyType,
+    status: KeyboardKeyStatus
 }

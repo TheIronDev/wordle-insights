@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from 'react'
 import BoardComponent from './Board'
 import KeyboardComponent from "./Keyboard";
-import {Game, KeyboardKey, KeyboardKeyType} from './types'
+import {Game, KeyboardHints, KeyboardKey, KeyboardKeyType} from './types'
 import styles from '../styles/Game.module.css'
 import {doc, setDoc} from "firebase/firestore";
 import {db} from "../firebase";
@@ -55,7 +55,9 @@ const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
     return (
     <div className={styles.container}>
         <BoardComponent game={game as Game} />
-        <KeyboardComponent keyboardCallback={keyboardCallback} game={game as Game} gameRef={gameRef}  />
+        <KeyboardComponent
+            keyboardCallback={keyboardCallback}
+            keyboardHints={game.keyboardHints as KeyboardHints} />
     </div>
         )
 }
