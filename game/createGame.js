@@ -7,6 +7,7 @@ module.exports = (word, timestamp) => {
       value: '',
       isChecking: false,
       isError: false,
+      isNotFoundInDictionary: false,
     },
     attempts: [],
     hints: [],
