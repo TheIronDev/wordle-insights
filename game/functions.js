@@ -1,8 +1,8 @@
 const {initializeApp, applicationDefault} = require('firebase-admin/app');
 const {getFirestore} = require('firebase-admin/firestore');
 const {https, firestore} = require('firebase-functions');
-const createGame = require('./createGame');
-const updateGame = require('./updateGame');
+const {createGame} = require('./create');
+const {reduceGame} = require('./reduceGame');
 
 initializeApp({
   credential: applicationDefault(),
@@ -18,6 +18,11 @@ exports.gameAttemptTest = https.onRequest((req, res) => {
 
 exports.gameAttempt = firestore.document('games/{uid}')
     .onUpdate((change, context) => {
-      const update = change.after.data();
-      updateGame(update);
+      const updatedGame = change.after.data();
+      const reducedGame = reduceGame(updatedGame);
+      console.log('Function UpdatedGame');
+      console.table(updatedGame);
+
+      console.log('Reduce UpdatedGame');
+      console.table(reducedGame);
     });
