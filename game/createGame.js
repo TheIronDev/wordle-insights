@@ -1,4 +1,7 @@
+const {encrypt} = require('./crypto');
+
 module.exports = (word, timestamp) => {
+  const {iv: wordIv, data: wordData} = encrypt(word);
   return {
     attempt: {
       value: '',
@@ -15,6 +18,7 @@ module.exports = (word, timestamp) => {
     isNewGameRequested: false,
     isComplete: false,
     isWon: false,
-    word: word,
+    wordIv,
+    wordData,
   };
 };
