@@ -5,3 +5,14 @@
     justify-content: space-between;
     height: calc(100vh - 3rem);
 }
+
+.newGameSection {
+  height: 5rem;
+}
+
+.newGameButton {
+  background: #1D95EC;
+  border: 0;
+  border-radius: 5px;
+  padding: 1rem;
+}

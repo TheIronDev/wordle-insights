@@ -4,6 +4,7 @@ export enum CellState {
     INCORRECT,
     CORRECT,
     PARTIAL,
+    ERROR,
 }
 
 export type Cell = {

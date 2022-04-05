@@ -7,7 +7,7 @@
     font-size: 3rem;
     justify-content: center;
     text-transform: uppercase;
-    margin: 1rem;
+    margin: 5px;
     height: 5rem;
     width: 5rem
 }
@@ -15,13 +15,20 @@
 .incorrect {background: #ddd}
 .correct {background: #00bb00;}
 .partial {background: #d9d914;}
+.error {border: 1px solid #f00;}
 .default {}
 
 @media (max-width: 600px) {
     .container {
         box-shadow: 1px 1px 3px -1px #aaa;
-        margin: .5rem;
-        height: 3rem;
-        width: 3rem
+        margin: 5px;
+        height: 0;
+        padding-top: 18%;
+        position: relative;
+        width: 18%;
+    }
+
+    .letter {
+        margin-top: -100%;
     }
 }

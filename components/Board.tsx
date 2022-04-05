@@ -3,10 +3,6 @@ import RowComponent from './BoardRow';
 import {Cell, CellState, Game} from './types';
 import styles from '../styles/Board.module.css';
 
-import {doc} from 'firebase/firestore';
-import {db} from '../firebase';
-import {useDocumentData} from 'react-firebase-hooks/firestore';
-
 
 type BoardProps = {
     game: Game,
@@ -25,22 +21,31 @@ function getCellState(hintState: string): CellState {
   }
 }
 
-function createResults(attemptChar: string, hintChar: string): Cell {
+function createResults(
+    value: string,
+    hintChar: string,
+    isError: boolean): Cell {
+  let state = getCellState(hintChar) || CellState.EMPTY;
+  if (isError) state = CellState.ERROR;
   return {
-    value: attemptChar,
-    state: getCellState(hintChar) || CellState.EMPTY,
+    value,
+    state,
   } as Cell;
 }
 
-function createResultsRow(attempt: string, hintString: string): Cell[] {
+function createResultsRow(
+    attempt: string,
+    hintString: string,
+    isError: boolean): Cell[] {
   const hintArray = hintString.split('');
   return attempt.split('').map((attemptChar, colIndex) =>
-    createResults(attemptChar, hintArray[colIndex]));
+    createResults(attemptChar, hintArray[colIndex], isError));
 }
 
 function createResultsGrid(attempts: string[], hints: string[]): Cell[][] {
+  const isError = false; // Because the previous results are never errors
   return attempts.map((attempt, rowIndex) =>
-    createResultsRow(attempt, hints[rowIndex] || ''),
+    createResultsRow(attempt, hints[rowIndex] || '', isError),
   );
 }
 
@@ -50,7 +55,7 @@ const BoardComponent: FunctionComponent<BoardProps> = ({game}) => {
 
   const results: Cell[][] = [
     ...createResultsGrid(game.attempts || [], game.hints || []),
-    createResultsRow(game.attempt?.value || '', ''),
+    createResultsRow(game.attempt?.value || '', '', !!game.attempt.isError),
   ];
 
   return (

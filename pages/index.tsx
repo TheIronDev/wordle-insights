@@ -50,6 +50,7 @@ const Home: NextPage = (props) => {
   const mainContent = currentUser && currentUser.uid ?
     <GameComponent uid={currentUser.uid} /> :
     <div>Login required</div>;
+
   const viewportMetadata = [
     'width=device-width',
     'initial-scale=1.0',
@@ -65,7 +66,7 @@ const Home: NextPage = (props) => {
           name="description"
           content="Wordle Insights - Wordle with an emphasis on data" />
         <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="{viewportMetadata}" />
+        <meta name="viewport" content={viewportMetadata} />
       </Head>
 
       <nav>

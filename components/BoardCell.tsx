@@ -17,6 +17,8 @@ function getCellStyle(cellState: CellState): string {
       return styles.correct;
     case CellState.PARTIAL:
       return styles.partial;
+    case CellState.ERROR:
+      return styles.error;
     case CellState.EMPTY:
     case CellState.PENDING:
     default:
@@ -26,7 +28,7 @@ function getCellStyle(cellState: CellState): string {
 
 const CellComponent: FunctionComponent<CellProps> = ({cell}) => (
   <div className={[styles.container, getCellStyle(cell?.state)].join(' ')}>
-    {cell?.value}
+    <span className={styles.letter}>{cell?.value}</span>
   </div>
 );
 

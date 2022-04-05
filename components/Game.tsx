@@ -44,9 +44,11 @@ const onKeyClick = (
 
 const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
   const gameRef = doc(db, 'games', uid);
-  const [game] = useDocumentData(gameRef);
+  const [gameDocumentData] = useDocumentData(gameRef);
+  const game = gameDocumentData as Game;
 
   const keyboardCallback = (keyboardKey: KeyboardKey) => {
+    if (game.isComplete) return;
     onKeyClick(keyboardKey, game as Game, gameRef);
   };
 
@@ -59,13 +61,19 @@ const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
   };
 
   const newGameSection = game.isComplete ?
-    <button onClick={() => onNewGameClick()}>Start a new game?</button> :
+    <button
+      className={styles.newGameButton}
+      onClick={() => onNewGameClick()}>
+      New Game
+    </button> :
     <span></span>;
 
   return (
     <div className={styles.container}>
       <BoardComponent game={game as Game}/>
-      {newGameSection}
+      <div className={styles.newGameSection}>
+        {newGameSection}
+      </div>
       <KeyboardComponent
         keyboardCallback={keyboardCallback}
         keyboardHints={game.keyboardHints as KeyboardHints}/>
