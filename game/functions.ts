@@ -5,6 +5,7 @@ import {https, firestore, auth} from 'firebase-functions';
 import {createCompletedGame, createGame, createProfile} from './create.js';
 import {reduceGame} from './reduceGame.js';
 import {Game} from './types';
+import {dictionary} from '../dictionary/frequent_5.js';
 
 initializeApp({
   credential: applicationDefault(),
@@ -12,18 +13,77 @@ initializeApp({
 });
 const db = getFirestore();
 
+const getWordsCompletedByOtherUsers =
+  async (uid: string, currentUserWords: string[]): Promise<string[]> => {
+    const snapshot = await db
+        .collection('completedGames')
+        .where('uid', '!=', uid)
+        .get();
+
+    if (snapshot.empty) {
+      return [];
+    }
+
+    const words = snapshot.docs.map((doc) => doc.data().word);
+    const wordSet = new Set(words);
+
+    // Remove any words the user already attempted
+    currentUserWords.forEach((word) => wordSet.delete(word));
+
+    return Array.from(wordSet);
+  };
+
+const getWordsCompletedByUser =
+  async (uid: string): Promise<string[]> => {
+    const snapshot = await db
+        .collection('completedGames')
+        .where('uid', '==', uid)
+        .get();
+
+    if (snapshot.empty) {
+      return [];
+    }
+
+    const words = snapshot.docs.map((doc) => doc.data().word);
+    const wordSet = new Set(words);
+
+    return Array.from(wordSet);
+  };
+
+const getWordsFromDictionary = () => dictionary;
+
+const getNewWordForUser = async (uid:string) => {
+  const userWords = await getWordsCompletedByUser(uid);
+  const otherUserWords = await getWordsCompletedByOtherUsers(uid, userWords);
+  if (otherUserWords.length) {
+    return otherUserWords[0];
+  }
+  const validWords = getWordsFromDictionary()
+      .filter((word) => !userWords.includes(word));
+  const index = ~~(Math.random() * validWords.length);
+
+  return validWords[index];
+};
+
 export const onUserCreated = auth.user().onCreate((user, context) => {
   const newProfile = createProfile(user, admin.firestore.Timestamp.now());
   db.collection('profiles').doc(user.uid).set(newProfile);
 
-  const newGame = createGame('lowly', admin.firestore.Timestamp.now());
-  db.collection('games').doc(user.uid).set(newGame);
+  getNewWordForUser(user.uid).then((newWord) => {
+    const newGame = createGame(newWord, admin.firestore.Timestamp.now());
+    db.collection('games').doc(user.uid).set(newGame);
+  });
 });
 
 export const gameAttemptTest = https.onRequest((req, res) => {
-  const newGame = createGame('lowly', admin.firestore.Timestamp.now());
-  db.collection('games').add(newGame);
-  res.json(newGame);
+  const uid = 'test';
+  getNewWordForUser(uid)
+      .then((newWord) => {
+        const newGame = createGame(newWord, admin.firestore.Timestamp.now());
+        db.collection('games').doc(uid).set(newGame);
+
+        res.json(newGame);
+      });
 });
 
 export const gameAttempt = firestore.document('games/{uid}')
@@ -32,8 +92,12 @@ export const gameAttempt = firestore.document('games/{uid}')
       const reducedGame = reduceGame(updatedGame as Game);
 
       if (reducedGame.isNewGameRequested) {
-        change.after.ref.update(
-            createGame('hello', admin.firestore.Timestamp.now()));
+        const uid = change.after.id;
+        return getNewWordForUser(uid)
+            .then((newWord) => {
+              change.after.ref.update(
+                  createGame(newWord, admin.firestore.Timestamp.now()));
+            });
         return;
       }
 
