@@ -4,7 +4,6 @@ import {isError, isFoundInDictionary} from './checkGame.js';
 import {Game} from './types.js';
 
 const getWord = (game: Game) => {
-  console.log('get word', game.wordIv, game.wordData, decrypt(game.wordIv, game.wordData));
   return decrypt(game.wordIv, game.wordData);
 };
 
@@ -70,7 +69,6 @@ export const reduceGame = (game: Game) => {
   const action = getAction(game);
   const updatedGame = {...game};
   updatedGame.attempt = {...game.attempt};
-  console.log('reducer action: ', action);
   switch (action) {
     case 'IS_COMPLETE': return handleIsComplete(updatedGame);
     case 'NEW_GAME_REQUESTED': return handleNewGameRequested(updatedGame);

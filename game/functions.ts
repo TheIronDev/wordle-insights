@@ -22,5 +22,4 @@ export const gameAttempt = firestore.document('games/{uid}')
     .onUpdate((change, context) => {
       const updatedGame = change.after.data();
       const reducedGame = reduceGame(updatedGame as Game);
-      console.log(updatedGame, reducedGame);
     });

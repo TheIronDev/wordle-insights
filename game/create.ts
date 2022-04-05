@@ -10,7 +10,6 @@ export const createAttempt = () => ({
 
 export const createGame = (word: string, timestamp: FirebaseFirestore.Timestamp): Game => {
   const {iv: wordIv, data: wordData} = encrypt(word);
-  console.log(word, wordIv, wordData, decrypt(wordIv, wordData));
   return {
     attempt: createAttempt(),
     attempts: [],
