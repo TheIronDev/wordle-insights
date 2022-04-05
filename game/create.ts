@@ -1,5 +1,6 @@
-import {CompletedGame, Game, KeyboardHintMap} from './types';
+import {CompletedGame, Game, KeyboardHintMap, Profile} from './types';
 import {decrypt, encrypt} from './crypto.js';
+import {UserRecord} from 'firebase-functions/lib/common/providers/identity';
 
 export const createAttempt = () => ({
   value: '',
@@ -74,4 +75,15 @@ export const createKeyboardHintsMap = (
   }
 
   return keyboardHints;
+};
+
+export const createProfile = (
+    user: UserRecord,
+    timestamp: FirebaseFirestore.Timestamp): Profile => {
+  return {
+    displayName: user.displayName,
+    userName: user.uid,
+    photoUrl: user.photoURL,
+    created: timestamp,
+  };
 };

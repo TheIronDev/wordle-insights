@@ -1,5 +1,13 @@
-export type User = {};
-export type Profile = {};
+export type User = {
+  uid: string
+};
+export type Profile = {
+  displayName: string|undefined,
+  photoUrl: string|undefined,
+  userName: string|undefined,
+  created: FirebaseFirestore.Timestamp,
+};
+
 export type Attempt = {
   value: string,
   isChecking: boolean,

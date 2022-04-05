@@ -1,8 +1,8 @@
 import {initializeApp, applicationDefault} from 'firebase-admin/app';
 import admin from 'firebase-admin';
 import {getFirestore} from 'firebase-admin/firestore';
-import {https, firestore} from 'firebase-functions';
-import {createCompletedGame, createGame} from './create.js';
+import {https, firestore, auth} from 'firebase-functions';
+import {createCompletedGame, createGame, createProfile} from './create.js';
 import {reduceGame} from './reduceGame.js';
 import {Game} from './types';
 
@@ -11,6 +11,14 @@ initializeApp({
   databaseURL: 'https://wordle-insights-default-rtdb.firebaseio.com',
 });
 const db = getFirestore();
+
+export const onUserCreated = auth.user().onCreate((user, context) => {
+  const newProfile = createProfile(user, admin.firestore.Timestamp.now());
+  db.collection('profiles').doc(user.uid).set(newProfile);
+
+  const newGame = createGame('lowly', admin.firestore.Timestamp.now());
+  db.collection('games').doc(user.uid).set(newGame);
+});
 
 export const gameAttemptTest = https.onRequest((req, res) => {
   const newGame = createGame('lowly', admin.firestore.Timestamp.now());
@@ -40,7 +48,6 @@ export const gameAttempt = firestore.document('games/{uid}')
       }
 
       if (updatedGame.attempt.isChecking) {
-
         change.after.ref.update(reducedGame);
         return;
       }
