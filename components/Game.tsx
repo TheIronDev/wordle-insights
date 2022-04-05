@@ -17,6 +17,7 @@ const onKeyClick = (
     gameData: Game, gameRef: DocumentReference<DocumentData>) => {
   let attemptValue = gameData.attempt.value;
   const attempt = {...gameData.attempt};
+  attempt.isError = false;
   switch (keyboardKey.type) {
     case KeyboardKeyType.CHAR:
       attemptValue = attemptValue + keyboardKey.display;
@@ -32,9 +33,10 @@ const onKeyClick = (
       setDoc(gameRef, Object.assign({}, gameData, {attempt}));
       break;
     case KeyboardKeyType.SUBMIT:
-      attempt.isChecking = true;
-
-      setDoc(gameRef, Object.assign({}, gameData, {attempt}));
+      if (attemptValue.length === 5) {
+        attempt.isChecking = true;
+        setDoc(gameRef, Object.assign({}, gameData, {attempt}));
+      }
       break;
     case KeyboardKeyType.UNKNOWN:
     default:
@@ -68,8 +70,12 @@ const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
     </button> :
     <span></span>;
 
+  const containerClass = game.attempt.isChecking ?
+      [styles.container, styles.loading].join(' ') :
+      styles.container;
+
   return (
-    <div className={styles.container}>
+    <div className={containerClass}>
       <BoardComponent game={game as Game}/>
       <div className={styles.newGameSection}>
         {newGameSection}
