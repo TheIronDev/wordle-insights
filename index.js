@@ -1,9 +1,9 @@
-const nextServer = require('./nextServer');
-const {gameAttempt, gameAttemptTest} = require('./game/functions');
+import {nextServer} from './nextServer.js';
+import {gameAttempt, gameAttemptTest} from './out/game/functions.js';
 
 // Functions wired up to start nextjs server
-exports.nextServer = nextServer;
+export const nextServerFunction = nextServer;
 
 // Functions mapping game functionality
-exports.gameAttempt = gameAttempt;
-exports.gameAttemptTest = gameAttemptTest;
+export const gameAttemptFunction = gameAttempt;
+export const gameAttemptTestFunction = gameAttemptTest;

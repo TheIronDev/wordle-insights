@@ -1,14 +1,14 @@
-const dictionary = require('../dictionary/frequent_5.json');
+import {dictionary} from '../dictionary/frequent_5.js';
 const validCharacters = 'abcdefghijklmnopqrstuvwxyz';
 
 export const isFoundInDictionary =
-  (attemptedWord) => (dictionary.indexOf(attemptedWord) !== -1);
+  (attemptedWord: string) => (dictionary.indexOf(attemptedWord) !== -1);
 
-export const isError = (attemptValue) => {
+export const isError = (attemptValue: string) => {
   // Attempted word must be 5 characters
   if (attemptValue.length !== 5) return true;
   // Attempted word must only consist of valid characters
-  if (attemptValue
+  if (!attemptValue
       .split('')
       .every((val) => validCharacters.indexOf(val) !== -1)) return true;
   // Attempted word must be a word in our dictionary

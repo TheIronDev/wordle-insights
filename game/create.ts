@@ -1,4 +1,5 @@
-const {encrypt} = require('./crypto');
+import {Game, KeyboardHintMap} from './types';
+import {encrypt, decrypt} from './crypto.js';
 
 export const createAttempt = () => ({
   value: '',
@@ -7,8 +8,9 @@ export const createAttempt = () => ({
   isNotFoundInDictionary: false,
 });
 
-export const createGame = (word, timestamp) => {
+export const createGame = (word: string, timestamp: FirebaseFirestore.Timestamp): Game => {
   const {iv: wordIv, data: wordData} = encrypt(word);
+  console.log(word, wordIv, wordData, decrypt(wordIv, wordData));
   return {
     attempt: createAttempt(),
     attempts: [],
@@ -22,10 +24,10 @@ export const createGame = (word, timestamp) => {
     isWon: false,
     wordIv,
     wordData,
-  };
+  } as Game;
 };
 
-export const createHint = (attemptValue, actualValue) => {
+export const createHint = (attemptValue: string, actualValue: string) => {
   const hints = [...Array(actualValue.length)].map(() => 0);
   const actualCharacters = new Set(actualValue.split(''));
 
@@ -41,7 +43,7 @@ export const createHint = (attemptValue, actualValue) => {
 };
 
 export const createKeyboardHintsMap =
-  (initialKeyboardHints, attemptWord, attemptHint) => {
+  (initialKeyboardHints: KeyboardHintMap, attemptWord:string, attemptHint: string) => {
     const keyboardHints = {...initialKeyboardHints};
     for (let index = 0; index < attemptWord.length; index++) {
       const hintChar = attemptWord[index];

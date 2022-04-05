@@ -1,13 +1,17 @@
-const {decrypt} = require('./crypto');
-const {createAttempt, createHint, createKeyboardHintsMap} = require('./create');
-const {isError, isFoundInDictionary} = require('./checkGame');
+import {decrypt} from './crypto.js';
+import {createAttempt, createHint, createKeyboardHintsMap} from './create.js';
+import {isError, isFoundInDictionary} from './checkGame.js';
+import {Game} from './types.js';
 
-const getWord = ({wordIv, wordData}) => decrypt(wordIv, wordData);
+const getWord = (game: Game) => {
+  console.log('get word', game.wordIv, game.wordData, decrypt(game.wordIv, game.wordData));
+  return decrypt(game.wordIv, game.wordData);
+};
 
-export const handleClientsideMutation = (game) => game;
-export const handleIsComplete = (game) => game;
-export const handleNewGameRequested = (game) => game; // TODO
-export const handleError = (game) => {
+export const handleClientsideMutation = (game: Game) => game; // No-op
+export const handleIsComplete = (game: Game) => game; // No-op
+export const handleNewGameRequested = (game: Game) => game; // TODO
+export const handleError = (game: Game) => {
   // Stop the infinite loops today!
   game.attempt.isChecking = false;
   game.attempt.isError = true;
@@ -18,7 +22,7 @@ export const handleError = (game) => {
 
   return game;
 };
-export const handleAttempt = (game) => {
+export const handleAttempt = (game: Game) => {
   // Stop the infinite loops today!
   game.attempt.isChecking = false;
 
@@ -40,7 +44,7 @@ export const handleAttempt = (game) => {
 
   return game;
 };
-export const getAction = (game) => {
+export const getAction = (game: Game) => {
   // If a new game is requested, overwrite existing game
   if (game.isNewGameRequested) {
     return 'NEW_GAME_REQUESTED';
@@ -62,9 +66,11 @@ export const getAction = (game) => {
   return 'ATTEMPT';
 };
 
-export const reduceGame = (game) => {
+export const reduceGame = (game: Game) => {
   const action = getAction(game);
   const updatedGame = {...game};
+  updatedGame.attempt = {...game.attempt};
+  console.log('reducer action: ', action);
   switch (action) {
     case 'IS_COMPLETE': return handleIsComplete(updatedGame);
     case 'NEW_GAME_REQUESTED': return handleNewGameRequested(updatedGame);

@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "next-remote-watch",
     "start": "next start",
     "lint": "next lint",
     "build": "next build",
+    "emulate": "tsc && firebase emulators:start",
     "serve": "npm run build && firebase emulators:start --only functions,hosting",
     "deploy": "firebase deploy"
   },
@@ -15,7 +17,7 @@
     "crypto": "^1.0.1",
     "firebase": "^9.6.10",
     "firebase-admin": "^10.0.2",
-    "firebase-functions": "^3.19.0",
+    "firebase-functions": "^3.20.0",
     "next": "12.1.2",
     "react": "18.0.0",
     "react-dom": "18.0.0",
@@ -32,6 +34,6 @@
     "eslint-config-next": "12.1.2",
     "eslint-plugin-react": "^7.29.4",
     "next-remote-watch": "^1.0.0",
-    "typescript": "4.6.3"
+    "typescript": "^4.6.3"
   }
 }
