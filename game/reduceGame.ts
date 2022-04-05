@@ -9,7 +9,7 @@ const getWord = (game: Game) => {
 
 export const handleClientsideMutation = (game: Game) => game; // No-op
 export const handleIsComplete = (game: Game) => game; // No-op
-export const handleNewGameRequested = (game: Game) => game; // TODO
+export const handleNewGameRequested = (game: Game) => game; // No-op
 export const handleError = (game: Game) => {
   // Stop the infinite loops today!
   game.attempt.isChecking = false;

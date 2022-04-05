@@ -1,5 +1,5 @@
-import {Game, KeyboardHintMap} from './types';
-import {encrypt, decrypt} from './crypto.js';
+import {CompletedGame, Game, KeyboardHintMap} from './types';
+import {decrypt, encrypt} from './crypto.js';
 
 export const createAttempt = () => ({
   value: '',
@@ -8,22 +8,39 @@ export const createAttempt = () => ({
   isNotFoundInDictionary: false,
 });
 
-export const createGame = (word: string, timestamp: FirebaseFirestore.Timestamp): Game => {
-  const {iv: wordIv, data: wordData} = encrypt(word);
+export const createGame =
+  (word: string, timestamp: FirebaseFirestore.Timestamp): Game => {
+    const {iv: wordIv, data: wordData} = encrypt(word);
+    return {
+      attempt: createAttempt(),
+      attempts: [],
+      hints: [],
+      keyboardHints: {
+        '_': 'INCORRECT', // Initial value possibly required
+      },
+      created: timestamp,
+      isNewGameRequested: false,
+      isComplete: false,
+      isWon: false,
+      wordIv,
+      wordData,
+    } as Game;
+  };
+
+export const createCompletedGame = (
+    game: Game,
+    uid: string,
+    timestamp: FirebaseFirestore.Timestamp): CompletedGame => {
+  const word = decrypt(game.wordIv, game.wordData);
   return {
-    attempt: createAttempt(),
-    attempts: [],
-    hints: [],
-    keyboardHints: {
-      '_': 'INCORRECT', // Initial value possibly required
-    },
+    attemptCount: game.attempts.length,
+    attempts: game.attempts,
+    hints: game.hints,
     created: timestamp,
-    isNewGameRequested: false,
-    isComplete: false,
-    isWon: false,
-    wordIv,
-    wordData,
-  } as Game;
+    isWon: game.isWon,
+    word: word,
+    uid: uid,
+  } as CompletedGame;
 };
 
 export const createHint = (attemptValue: string, actualValue: string) => {
@@ -41,18 +58,20 @@ export const createHint = (attemptValue: string, actualValue: string) => {
   return hints.join('');
 };
 
-export const createKeyboardHintsMap =
-  (initialKeyboardHints: KeyboardHintMap, attemptWord:string, attemptHint: string) => {
-    const keyboardHints = {...initialKeyboardHints};
-    for (let index = 0; index < attemptWord.length; index++) {
-      const hintChar = attemptWord[index];
-      const hintValue = attemptHint[index];
-      if (!keyboardHints[hintChar]) {
-        keyboardHints[hintChar] = hintValue;
-      } else if (keyboardHints[hintChar] === '1' && hintValue == '2') {
-        keyboardHints[hintChar] = hintValue;
-      }
+export const createKeyboardHintsMap = (
+    initialKeyboardHints: KeyboardHintMap,
+    attemptWord:string,
+    attemptHint: string) => {
+  const keyboardHints = {...initialKeyboardHints};
+  for (let index = 0; index < attemptWord.length; index++) {
+    const hintChar = attemptWord[index];
+    const hintValue = attemptHint[index];
+    if (!keyboardHints[hintChar]) {
+      keyboardHints[hintChar] = hintValue;
+    } else if (keyboardHints[hintChar] === '1' && hintValue == '2') {
+      keyboardHints[hintChar] = hintValue;
     }
+  }
 
-    return keyboardHints;
-  };
+  return keyboardHints;
+};

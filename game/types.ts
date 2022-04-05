@@ -25,6 +25,7 @@ export type CompletedGame = {
   attemptCount: number,
   attempts: string[],
   hints: string[],
+  uid: string,
   isWon: boolean,
   word: string,
 };
