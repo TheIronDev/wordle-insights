@@ -11,7 +11,7 @@
     "build": "next build",
     "emulate": "tsc && firebase emulators:start",
     "serve": "npm run build && firebase emulators:start --only functions,hosting",
-    "deploy": "firebase deploy"
+    "deploy": "tsc && npm run build && firebase deploy"
   },
   "dependencies": {
     "crypto": "^1.0.1",
