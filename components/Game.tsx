@@ -18,6 +18,7 @@ const onKeyClick = (
   let attemptValue = gameData.attempt.value;
   const attempt = {...gameData.attempt};
   attempt.isError = false;
+  attempt.isNotFoundInDictionary = false;
   switch (keyboardKey.type) {
     case KeyboardKeyType.CHAR:
       attemptValue = attemptValue + keyboardKey.display;
@@ -74,8 +75,14 @@ const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
       [styles.container, styles.loading].join(' ') :
       styles.container;
 
+  const toastContent = game.attempt.isNotFoundInDictionary ?
+      <div className={styles.toast}>
+        "{game.attempt.value}" is not a valid word
+      </div> : <div></div>;
+
   return (
     <div className={containerClass}>
+      {toastContent}
       <BoardComponent game={game as Game}/>
       <div className={styles.newGameSection}>
         {newGameSection}

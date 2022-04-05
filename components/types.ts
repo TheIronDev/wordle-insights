@@ -20,7 +20,8 @@ export type KeyboardHints = {
 export type Attempt = {
     value: string,
     isChecking: boolean,
-    isError: boolean
+    isError: boolean,
+    isNotFoundInDictionary: boolean
 }
 
 export type Game = {
