@@ -17,9 +17,9 @@ function getKeyboardStatus(
     key:string,
     keyboardHints: KeyboardHints): KeyboardKeyStatus {
   switch (keyboardHints[key]) {
-    case 'INCORRECT': return KeyboardKeyStatus.INCORRECT;
-    case 'CORRECT': return KeyboardKeyStatus.CORRECT;
-    case 'PARTIAL': return KeyboardKeyStatus.PARTIAL;
+    case '0': return KeyboardKeyStatus.INCORRECT;
+    case '2': return KeyboardKeyStatus.CORRECT;
+    case '1': return KeyboardKeyStatus.PARTIAL;
     default: return KeyboardKeyStatus.UNKNOWN;
   }
 }

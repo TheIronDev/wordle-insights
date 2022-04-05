@@ -54,9 +54,18 @@ const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
     return (<div>Start a new game?</div>);
   }
 
+  const onNewGameClick = () => {
+    setDoc(gameRef, Object.assign({}, game, {isNewGameRequested: true}));
+  };
+
+  const newGameSection = game.isComplete ?
+    <button onClick={() => onNewGameClick()}>Start a new game?</button> :
+    <span></span>;
+
   return (
     <div className={styles.container}>
       <BoardComponent game={game as Game}/>
+      {newGameSection}
       <KeyboardComponent
         keyboardCallback={keyboardCallback}
         keyboardHints={game.keyboardHints as KeyboardHints}/>
