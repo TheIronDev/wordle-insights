@@ -37,8 +37,10 @@ const Home: NextPage = (props) => {
   const [currentUser, setCurrentUser] = useState({
     displayName: '',
     isLoggedIn: false,
+    uid: '',
   } as User);
   onAuthStateChanged(auth, (user) => {
+    if (currentUser.uid === user?.uid) return;
     setCurrentUser({
       displayName: user?.displayName || '',
       isLoggedIn: !!user,
