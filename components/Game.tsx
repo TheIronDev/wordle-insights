@@ -77,7 +77,7 @@ const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
 
   const toastContent = game.attempt.isNotFoundInDictionary ?
       <div className={styles.toast}>
-        "{game.attempt.value}" is not a valid word
+        &quot;{game.attempt.value}&quot; is not a valid word
       </div> : <div></div>;
 
   return (
