@@ -29,7 +29,7 @@
 }
 
 .correct {background: green;}
-.incorrect {background: #333}
+.incorrect {background: #333; color: #efefef}
 .partial {background: yellow}
 .unknown {}
 

@@ -29,9 +29,12 @@ function convertKeyStringToKeyboardKey(
     keyboardHints: KeyboardHints): KeyboardKey {
   switch (key) {
     case 'SUBMIT':
-      return {display: '✅️', type: KeyboardKeyType.SUBMIT} as KeyboardKey;
+      return {display: 'check', type: KeyboardKeyType.SUBMIT} as KeyboardKey;
     case 'DELETE':
-      return {display: '⬅️', type: KeyboardKeyType.DELETE} as KeyboardKey;
+      return {
+        display: 'keyboard_backspace',
+        type: KeyboardKeyType.DELETE,
+      } as KeyboardKey;
     default:
   }
   return {
@@ -46,7 +49,7 @@ const keyboardKeys = (keyRows: string[][], keyboardHints: KeyboardHints) =>
       (keyRow) => (keyRow.map(
           (key) => convertKeyStringToKeyboardKey(key, keyboardHints))));
 
-function getKeyboardClass(keyboardKeyStatus: KeyboardKeyStatus) {
+function getKeyboardStateClass(keyboardKeyStatus: KeyboardKeyStatus) {
   switch (keyboardKeyStatus) {
     case KeyboardKeyStatus.INCORRECT:
       return styles.incorrect;
@@ -59,6 +62,18 @@ function getKeyboardClass(keyboardKeyStatus: KeyboardKeyStatus) {
   }
 }
 
+function getKeyboardTypeClass(keyboardKeyType: KeyboardKeyType) {
+  switch (keyboardKeyType) {
+    case KeyboardKeyType.DELETE: // Passthrough intentional
+    case KeyboardKeyType.SUBMIT:
+      return 'material-icons';
+    case KeyboardKeyType.UNKNOWN:
+    case KeyboardKeyType.CHAR:
+    default:
+      return '';
+  }
+}
+
 type KeyProps = {
     keyboardKey: KeyboardKey,
     keyboardCallback: any
@@ -66,9 +81,15 @@ type KeyProps = {
 const KeyComponent: FunctionComponent<KeyProps> =
   ({keyboardKey, keyboardCallback}) => (
     <button
-      className={[styles.key, getKeyboardClass(keyboardKey.status)].join(' ')}
+      className={[
+        styles.key,
+        getKeyboardStateClass(keyboardKey.status),
+        getKeyboardTypeClass(keyboardKey.type),
+      ].join(' ')}
       onClick={() => keyboardCallback(keyboardKey)}>
-      {keyboardKey.display}
+      <span className={getKeyboardTypeClass(keyboardKey.type)}>
+        {keyboardKey.display}
+      </span>
     </button>
   );
 
