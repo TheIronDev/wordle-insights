@@ -1,0 +1,41 @@
+.container {
+    background: #1D95EC;
+    box-shadow: 0 4px 8px #ccc;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 3rem;
+    position: absolute;
+    top: 0;
+    padding-left: 1rem;
+    width: 100%;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profilePic {
+    border-radius: 1rem;
+    max-height: 2rem;
+    max-width: 2rem;
+}
+
+.login,
+.logout {
+    background: none;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    max-height: 2rem;
+    max-width: 2rem;
+}
+.login:hover {
+  background: #fff;
+}
+
+.displayName {
+    margin: 0 .5rem;
+}

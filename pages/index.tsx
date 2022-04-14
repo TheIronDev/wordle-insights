@@ -4,33 +4,15 @@ import type {NextPage} from 'next';
 import Head from 'next/head';
 import GameComponent from '../components/Game';
 import styles from '../styles/Home.module.css';
-import {signInWithPopup, signOut, onAuthStateChanged} from 'firebase/auth';
-import {auth, googleAuthProvider} from '../firebase';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth, db, googleAuthProvider} from '../firebase';
+import NavbarComponent from '../components/Navbar';
 
 
 type User = {
     uid: string
     displayName: string
     isLoggedIn: boolean
-}
-
-function getUserAuthNavBar(currentUser:User) {
-  if (currentUser.isLoggedIn) {
-    return (
-      <div>
-        {currentUser.displayName}
-        <button onClick={() => signOut(auth)}>Login Out</button>
-      </div>
-    );
-  }
-  return (
-
-    <div>
-      <button onClick={() => signInWithPopup(auth, googleAuthProvider)}>
-        Login with Google
-      </button>
-    </div>
-  );
 }
 
 const Home: NextPage = (props) => {
@@ -48,7 +30,6 @@ const Home: NextPage = (props) => {
     } as User);
   });
 
-  const userAuthNavBarSection = getUserAuthNavBar(currentUser);
   const mainContent = currentUser && currentUser.uid ?
     <GameComponent uid={currentUser.uid} /> :
     <div>Login required</div>;
@@ -74,14 +55,9 @@ const Home: NextPage = (props) => {
         <meta name="viewport" content={viewportMetadata} />
       </Head>
 
-      <nav>
-        <h1 className={styles.title}>
-          Worldle Insights
-        </h1>
-        <div>
-          {userAuthNavBarSection}
-        </div>
-      </nav>
+      <NavbarComponent
+        uid={currentUser.uid}
+        isLoggedIn={currentUser.isLoggedIn} />
 
       <main className={styles.main}>
         {mainContent}
