@@ -7,10 +7,11 @@
 }
 
 .wordRow {
-    align-items: center;
+    align-items: end;
     display: flex;
     list-style: none;
-    margin: 0 2rem;
+    height: 3rem;
+    margin: 2px 2rem;
 }
 
 .word {
@@ -21,4 +22,21 @@
 .percent {
     margin-right: 1rem;
     min-width: 6rem;
+}
+
+.distributions {
+    align-items: end;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.distributionPercent {
+    align-items: end;
+    background: green;
+    color: #efefef;
+    display: flex;
+    justify-content: center;
+    margin: 0 1px;
+    width: 2rem;
 }

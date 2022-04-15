@@ -5,7 +5,6 @@ import {collection, getDocs} from 'firebase/firestore';
 import styles from '../../styles/Words.module.css';
 
 
-
 type Word = {
   id: string;
   wins: number
@@ -25,26 +24,42 @@ type CompletedGame = {
 }
 
 const WordsPage: NextPage = ({words}: {words: Word[]}) => {
-
   return <ul className={styles.container}>
     {words.map((word: Word) => {
       const percent = word.wins ?
         (word.wins + word.losses) / word.wins * 100 :
         0;
+      const max = Math.max(
+          word.wins_1_turn,
+          word.wins_2_turn,
+          word.wins_3_turn,
+          word.wins_4_turn,
+          word.wins_5_turn,
+          word.wins_6_turn,
+      ) || 1;
+      const distributionStyles = {
+        1: {height: (word.wins_1_turn / max) * 100 + '%'},
+        2: {height: (word.wins_2_turn / max) * 100 + '%'},
+        3: {height: (word.wins_3_turn / max) * 100 + '%'},
+        4: {height: (word.wins_4_turn / max) * 100 + '%'},
+        5: {height: (word.wins_5_turn / max) * 100 + '%'},
+        6: {height: (word.wins_6_turn / max) * 100 + '%'},
+      };
+
       return <li key={word.id} className={styles.wordRow}>
         <div className={styles.word}>
           {word.id}
         </div>
         <div className={styles.percent}>
-          {percent}% ({word.wins}/{word.losses})
+          {percent}% <sub>({word.wins}/{word.losses})</sub>
         </div>
-        <div className={styles.distribution}>
-          {word.wins_1_turn},
-          {word.wins_2_turn},
-          {word.wins_3_turn},
-          {word.wins_4_turn},
-          {word.wins_5_turn},
-          {word.wins_6_turn}
+        <div className={styles.distributions}>
+          <div className={styles.distributionPercent} style={distributionStyles['1']}>{word.wins_1_turn}</div>
+          <div className={styles.distributionPercent} style={distributionStyles['2']}>{word.wins_2_turn}</div>
+          <div className={styles.distributionPercent} style={distributionStyles['3']}>{word.wins_3_turn}</div>
+          <div className={styles.distributionPercent} style={distributionStyles['4']}>{word.wins_4_turn}</div>
+          <div className={styles.distributionPercent} style={distributionStyles['5']}>{word.wins_5_turn}</div>
+          <div className={styles.distributionPercent} style={distributionStyles['6']}>{word.wins_6_turn}</div>
         </div>
       </li>;
     })
