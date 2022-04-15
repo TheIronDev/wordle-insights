@@ -22,10 +22,10 @@ const NavbarAuthComponent: FunctionComponent<NavbarAuthProps> =
     if (!isLoggedIn || !uid) {
       return (
         <div className={styles.profile}>
-          <button onClick={() => signInWithPopup(auth, googleAuthProvider)}  className={styles.logout}>
-            <span className="material-icons">
-login
-</span>
+          <button
+            onClick={() => signInWithPopup(auth, googleAuthProvider)}
+            className={styles.logout}>
+            <span className="material-icons">login</span>
           </button>
         </div>
       );
@@ -57,7 +57,7 @@ const NavbarComponent: FunctionComponent<NavbarProps> = ({uid, isLoggedIn}) => {
       <h1 className={styles.title}>
         Worldle Insights
       </h1>
-      <NavbarAuthComponent isLoggedIn={isLoggedIn} uid={uid}/>
+      <NavbarAuthComponent isLoggedIn={isLoggedIn || false} uid={uid || ''}/>
     </nav>
   );
 };
