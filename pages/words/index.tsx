@@ -23,19 +23,23 @@ type CompletedGame = {
   word: string
 }
 
-const WordsPage: NextPage = ({words}: {words: Word[]}) => {
+type WordPageProps = {
+  words: WOrd[]
+}
+
+const WordsPage: NextPage<WordPageProps> = ({words}: { words: Word[] }) => {
   return <ul className={styles.container}>
     {words.map((word: Word) => {
       const percent = word.wins ?
         (word.wins + word.losses) / word.wins * 100 :
         0;
       const max = Math.max(
-          word.wins_1_turn,
-          word.wins_2_turn,
-          word.wins_3_turn,
-          word.wins_4_turn,
-          word.wins_5_turn,
-          word.wins_6_turn,
+        word.wins_1_turn,
+        word.wins_2_turn,
+        word.wins_3_turn,
+        word.wins_4_turn,
+        word.wins_5_turn,
+        word.wins_6_turn,
       ) || 1;
       const distributionStyles = {
         1: {height: (word.wins_1_turn / max) * 100 + '%'},
@@ -120,9 +124,9 @@ export async function getServerSideProps() {
   });
 
   const words = Object.values(wordsMap)
-      .sort((a, b) => {
-        return b.wins - a.wins;
-      });
+    .sort((a, b) => {
+      return b.wins - a.wins;
+    });
 
   // Pass data to the page via props
   return {props: {words}};
