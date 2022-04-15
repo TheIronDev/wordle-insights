@@ -40,9 +40,7 @@ const NavbarAuthComponent: FunctionComponent<NavbarAuthProps> =
         {profile?.displayName}
       </div>
       <button onClick={() => signOut(auth)} className={styles.logout}>
-        <span className="material-icons">
-logout
-</span>
+        <span className="material-icons">logout</span>
       </button>
     </div>;
   };

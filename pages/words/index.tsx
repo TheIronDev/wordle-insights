@@ -54,12 +54,24 @@ const WordsPage: NextPage = ({words}: {words: Word[]}) => {
           {percent}% <sub>({word.wins}/{word.losses})</sub>
         </div>
         <div className={styles.distributions}>
-          <div className={styles.distributionPercent} style={distributionStyles['1']}>{word.wins_1_turn}</div>
-          <div className={styles.distributionPercent} style={distributionStyles['2']}>{word.wins_2_turn}</div>
-          <div className={styles.distributionPercent} style={distributionStyles['3']}>{word.wins_3_turn}</div>
-          <div className={styles.distributionPercent} style={distributionStyles['4']}>{word.wins_4_turn}</div>
-          <div className={styles.distributionPercent} style={distributionStyles['5']}>{word.wins_5_turn}</div>
-          <div className={styles.distributionPercent} style={distributionStyles['6']}>{word.wins_6_turn}</div>
+          <div
+            className={styles.distributionPercent}
+            style={distributionStyles['1']}>{word.wins_1_turn}</div>
+          <div
+            className={styles.distributionPercent}
+            style={distributionStyles['2']}>{word.wins_2_turn}</div>
+          <div
+            className={styles.distributionPercent}
+            style={distributionStyles['3']}>{word.wins_3_turn}</div>
+          <div
+            className={styles.distributionPercent}
+            style={distributionStyles['4']}>{word.wins_4_turn}</div>
+          <div
+            className={styles.distributionPercent}
+            style={distributionStyles['5']}>{word.wins_5_turn}</div>
+          <div
+            className={styles.distributionPercent}
+            style={distributionStyles['6']}>{word.wins_6_turn}</div>
         </div>
       </li>;
     })
