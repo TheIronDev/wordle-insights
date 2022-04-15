@@ -1,0 +1,24 @@
+.container {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 1rem 0;
+    width: 100%;
+    max-width: 100%;
+}
+
+.wordRow {
+    align-items: center;
+    display: flex;
+    list-style: none;
+    margin: 0 2rem;
+}
+
+.word {
+    font-size: 24px;
+    min-width: 6rem;
+}
+
+.percent {
+    margin-right: 1rem;
+    min-width: 6rem;
+}
