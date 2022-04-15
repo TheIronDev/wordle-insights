@@ -24,7 +24,7 @@ type CompletedGame = {
 }
 
 type WordPageProps = {
-  words: WOrd[]
+  words: Word[]
 }
 
 const WordsPage: NextPage<WordPageProps> = ({words}: { words: Word[] }) => {
