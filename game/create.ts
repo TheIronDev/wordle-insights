@@ -47,13 +47,32 @@ export const createCompletedGame = (
 export const createHint = (attemptValue: string, actualValue: string) => {
   const hints = [...Array(actualValue.length)].map(() => 0);
   const actualCharacters = new Set(actualValue.split(''));
+  const actualCharactersAndCounts = actualValue.split('')
+      .reduce((memo, val) => {
+      memo.has(val) ? memo.set(val, memo.get(val) + 1) : memo.set(val, 1);
+      return memo;
+      }, new Map());
 
+  // First pass for exact matches
   for (let index = 0; index < attemptValue.length; index++) {
     if (attemptValue[index] === actualValue[index]) {
       hints[index] = 2;
       actualCharacters.delete(attemptValue[index]);
-    } else if (actualCharacters.has(attemptValue[index])) {
+      actualCharactersAndCounts.set(
+          attemptValue[index],
+          actualCharactersAndCounts.get(attemptValue[index]) - 1);
+    }
+  }
+
+  // Second pass to catch partial matches
+  for (let index = 0; index < attemptValue.length; index++) {
+    const isMatch = attemptValue[index] === actualValue[index];
+    if (!isMatch &&
+      actualCharactersAndCounts.get(attemptValue[index])) {
       hints[index] = 1;
+      actualCharactersAndCounts.set(
+          attemptValue[index],
+          actualCharactersAndCounts.get(attemptValue[index]) - 1);
     }
   }
   return hints.join('');
@@ -61,7 +80,7 @@ export const createHint = (attemptValue: string, actualValue: string) => {
 
 export const createKeyboardHintsMap = (
     initialKeyboardHints: KeyboardHintMap,
-    attemptWord:string,
+    attemptWord: string,
     attemptHint: string) => {
   const keyboardHints = {...initialKeyboardHints};
   for (let index = 0; index < attemptWord.length; index++) {
