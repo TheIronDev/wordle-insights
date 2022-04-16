@@ -1,4 +1,4 @@
-import React, {FunctionComponent, KeyboardEventHandler} from 'react';
+import React, {FunctionComponent} from 'react';
 import BoardComponent from './Board';
 import KeyboardComponent from './Keyboard';
 import {Game, KeyboardHints, KeyboardKey, KeyboardKeyType} from './types';

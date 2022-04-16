@@ -1,11 +1,9 @@
-import React, {FunctionComponent} from 'react';
+import React from 'react';
 import type {NextPage} from 'next';
-import {db} from '../../firebase';
-import {collection, getDocs} from 'firebase/firestore';
 import styles from '../../styles/Words.module.css';
 import WordListComponent from '../../components/WordList';
-import {CompletedGame, Word} from '../../components/types';
-import { getWords } from '../../data';
+import {Word} from '../../components/types';
+import {getWords} from '../../data';
 
 type WordPageProps = {
   words: Word[]

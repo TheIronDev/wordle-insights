@@ -1,7 +1,6 @@
 import React, {FunctionComponent} from 'react';
 import {useState} from 'react';
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from '../firebase';
 import NavbarComponent from '../components/Navbar';
@@ -36,16 +35,16 @@ const LayoutComponent: FunctionComponent = ({children}) => {
   ].join(', ');
 
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>World Insights</title>
       </Head>
 
       <NavbarComponent
-        uid={currentUser.uid}
-        isLoggedIn={currentUser.isLoggedIn} />
+        uid={currentUser.uid || ''}
+        isLoggedIn={currentUser.isLoggedIn || false} />
 
-      <main className={styles.main}>
+      <main>
         {children}
       </main>
     </div>

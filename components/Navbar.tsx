@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from 'react';
 import styles from '../styles/Navbar.module.css';
-import {doc, DocumentData, DocumentReference, setDoc} from 'firebase/firestore';
+import {doc} from 'firebase/firestore';
 import {auth, db, googleAuthProvider} from '../firebase';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
 import {signInWithPopup, signOut} from 'firebase/auth';
@@ -18,7 +18,7 @@ type NavbarAuthProps = {
 }
 
 const NavbarAuthComponent: FunctionComponent<NavbarAuthProps> =
-  ({uid, isLoggedIn}) => {
+  ({uid = '', isLoggedIn = false}) => {
     if (!isLoggedIn || !uid) {
       return (
         <div className={styles.profile}>
