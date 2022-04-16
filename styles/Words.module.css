@@ -2,16 +2,18 @@
     box-sizing: border-box;
     margin: 0;
     padding: 1rem 0;
+    text-align: center;
     width: 100%;
     max-width: 100%;
 }
 
 .wordRow {
-    align-items: end;
+    align-items: center;
     display: flex;
-    list-style: none;
     height: 3rem;
-    margin: 2px 2rem;
+    justify-content: center;
+    list-style: none;
+    margin: 1rem 2rem;
 }
 
 .word {
@@ -25,18 +27,21 @@
 }
 
 .distributions {
-    align-items: end;
+    align-items: flex-start;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     height: 100%;
+    width: 10rem;
 }
 
 .distributionPercent {
     align-items: end;
     background: green;
-    color: #efefef;
+    border-radius: 5px;
+    color: transparent;
     display: flex;
-    justify-content: center;
-    margin: 0 1px;
-    width: 2rem;
+    justify-content: flex-start;
+    margin: .5%;
+    min-width: 5px;
+    height: 14%;
 }
