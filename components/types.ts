@@ -25,6 +25,7 @@ export type Attempt = {
 }
 
 export type Game = {
+    wordSolution?: string,
     attempt: Attempt,
     attempts: string[],
     hints: string[],

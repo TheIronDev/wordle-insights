@@ -89,13 +89,13 @@ export const getUsersWordStats = async () => {
   });
 
   return Object.values(usersMap)
-    .sort((a, b) => {
-      return b.wins - a.wins;
-    });
-}
+      .sort((a, b) => {
+        return b.wins - a.wins;
+      });
+};
 
 
-export const getUserWordStats = async (userId) => {
+export const getUserWordStats = async (userId:string) => {
   const gamesSnapshot = await getDocs(collection(db, 'completedGames'));
   const usersMap: Record<string, User> = {};
 
@@ -104,10 +104,10 @@ export const getUserWordStats = async (userId) => {
     const {uid, attemptCount, isWon} = completedGame as CompletedGame;
     if (!uid) return;
     if (uid !== userId) return;
-    if (!usersMap[uid]) {
+    if (!usersMap?.[uid]) {
       usersMap[uid] = createUser(uid);
     }
-    const user = usersMap[uid];
+    const user = usersMap?.[uid];
     user.total++;
     if (isWon) {
       user.wins++;
