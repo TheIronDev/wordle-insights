@@ -39,14 +39,6 @@ const LayoutComponent: FunctionComponent = ({children}) => {
     <div className={styles.container}>
       <Head>
         <title>World Insights</title>
-        <meta
-          name="description"
-          content="Wordle Insights - Wordle with an emphasis on data" />
-        <link rel="icon" href="/favicon.ico" />
-        <link
-          href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet" />
-        <meta name="viewport" content={viewportMetadata} />
       </Head>
 
       <NavbarComponent
