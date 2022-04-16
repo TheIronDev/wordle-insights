@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, KeyboardEventHandler} from 'react';
 import BoardComponent from './Board';
 import KeyboardComponent from './Keyboard';
 import {Game, KeyboardHints, KeyboardKey, KeyboardKeyType} from './types';
@@ -6,6 +6,7 @@ import styles from '../styles/Game.module.css';
 import {doc, DocumentData, DocumentReference, setDoc} from 'firebase/firestore';
 import {db} from '../firebase';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
+import useEventListener from '@use-it/event-listener';
 
 
 type GameProps = {
@@ -15,6 +16,8 @@ type GameProps = {
 const onKeyClick = (
     keyboardKey: KeyboardKey,
     gameData: Game, gameRef: DocumentReference<DocumentData>) => {
+  if (gameData.isComplete) return;
+
   let attemptValue = gameData.attempt.value;
   const attempt = {...gameData.attempt};
   attempt.isError = false;
@@ -50,10 +53,31 @@ const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
   const [gameDocumentData] = useDocumentData(gameRef);
   const game = gameDocumentData as Game;
 
-  const keyboardCallback = (keyboardKey: KeyboardKey) => {
+  const keyboardClickCallback = (keyboardKey: KeyboardKey) => {
     if (game.isComplete) return;
     onKeyClick(keyboardKey, game as Game, gameRef);
   };
+
+  const keyboardKeydownCallback = (ev: KeyboardEvent) => {
+    if (game.isComplete) return;
+    let keyboardKey;
+    switch (ev.key) {
+      case 'Enter':
+        keyboardKey = {type: KeyboardKeyType.SUBMIT} as KeyboardKey;
+        return onKeyClick(keyboardKey, game as Game, gameRef);
+      case 'Backspace':
+        keyboardKey = {type: KeyboardKeyType.DELETE} as KeyboardKey;
+        return onKeyClick(keyboardKey, game as Game, gameRef);
+      default:
+        const validCharacters = 'abcdefghijklmnopqrstuvwxyz';
+        if (!validCharacters.includes(ev.key)) return;
+        keyboardKey =
+          {type: KeyboardKeyType.CHAR, display: ev.key} as KeyboardKey;
+        return onKeyClick(keyboardKey, game as Game, gameRef);
+    }
+  };
+
+  useEventListener('keydown', keyboardKeydownCallback);
 
   if (!game) {
     return (<div></div>);
@@ -88,7 +112,7 @@ const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
         {newGameSection}
       </div>
       <KeyboardComponent
-        keyboardCallback={keyboardCallback}
+        keyboardCallback={keyboardClickCallback}
         keyboardHints={game.keyboardHints as KeyboardHints}/>
     </div>
   );
