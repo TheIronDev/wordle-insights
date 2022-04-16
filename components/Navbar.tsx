@@ -1,4 +1,5 @@
 import React, {FunctionComponent} from 'react';
+import Link from 'next/link';
 import styles from '../styles/Navbar.module.css';
 import {doc} from 'firebase/firestore';
 import {auth, db, googleAuthProvider} from '../firebase';
@@ -52,9 +53,28 @@ type NavbarProps = {
 const NavbarComponent: FunctionComponent<NavbarProps> = ({uid, isLoggedIn}) => {
   return (
     <nav className={styles.container}>
-      <h1 className={styles.title}>
+      <div className={styles.leftContents}>
+        <h1 className={styles.title}>
         Worldle Insights
-      </h1>
+        </h1>
+        <Link href="/">
+          <div className={styles.btn}>
+            <span className={['material-icons'].join(' ')}>
+            videogame_asset
+            </span>
+            <span className={styles.btnText}>Home / Game</span>
+          </div>
+        </Link>
+        <Link href="/words">
+          <div className={styles.btn}>
+            <span className={['material-icons'].join(' ')}>
+            auto_graph
+            </span>
+            <span className={styles.btnText}>Word Data</span>
+
+          </div>
+        </Link>
+      </div>
       <NavbarAuthComponent isLoggedIn={isLoggedIn || false} uid={uid || ''}/>
     </nav>
   );

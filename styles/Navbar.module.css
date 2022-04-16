@@ -42,3 +42,27 @@
 .displayName {
     margin: 0 .5rem;
 }
+
+.leftContents {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.btn {
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    margin: 0 5px;
+    padding: 5px;
+}
+.btn:hover, .btn:active {
+    background: #6e00b7;
+    color: #fff
+}
+
+.btnText {
+    text-decoration: underline;
+}
