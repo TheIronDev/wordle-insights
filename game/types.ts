@@ -27,6 +27,7 @@ export type Game = {
   isWon: boolean,
   wordIv: string,
   wordData: string,
+  wordSolution: string,
 };
 
 export type CompletedGame = {

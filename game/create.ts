@@ -25,6 +25,7 @@ export const createGame =
       isWon: false,
       wordIv,
       wordData,
+      wordSolution: ''
     } as Game;
   };
 

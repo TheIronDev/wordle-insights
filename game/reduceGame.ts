@@ -40,6 +40,9 @@ export const handleAttempt = (game: Game) => {
   game.isWon = expectedWord === attemptWord;
   game.isComplete =
     (expectedWord === attemptWord) || (game.attempts.length >= 6);
+  if (game.isComplete) {
+    game.wordSolution = expectedWord;
+  }
 
   return game;
 };

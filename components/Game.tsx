@@ -9,6 +9,21 @@ import {useDocumentData} from 'react-firebase-hooks/firestore';
 import useEventListener from '@use-it/event-listener';
 
 
+const getToastContent = (game: Game) => {
+  if (game.attempt.isNotFoundInDictionary) {
+    return <div className={styles.toast}>
+      &quot;{game.attempt.value}&quot; is not a valid word
+    </div>;
+  }
+  if (game.wordSolution) {
+    return <div className={styles.toast}>
+      &quot;{game.wordSolution}&quot;
+    </div>;
+  }
+
+  return <div></div>;
+}
+
 type GameProps = {
   uid: string
 };
@@ -99,10 +114,7 @@ const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
       [styles.container, styles.loading].join(' ') :
       styles.container;
 
-  const toastContent = game.attempt.isNotFoundInDictionary ?
-      <div className={styles.toast}>
-        &quot;{game.attempt.value}&quot; is not a valid word
-      </div> : <div></div>;
+  const toastContent = getToastContent(game);
 
   return (
     <div className={containerClass}>
