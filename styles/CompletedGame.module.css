@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #efefef;
+}
+
+
+.word {
+    font-size: 24px;
+    min-width: 6rem;
+}

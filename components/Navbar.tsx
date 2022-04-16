@@ -37,7 +37,10 @@ const NavbarAuthComponent: FunctionComponent<NavbarAuthProps> =
     const profile = profileDocumentData as Profile;
 
     return <div className={styles.profile}>
-      <img className={styles.profilePic} src={profile?.photoUrl}/>
+
+      <Link href={'/users/' + uid}>
+        <img className={styles.profilePic} src={profile?.photoUrl}/>
+      </Link>
       <div className={styles.displayName}>
         {profile?.displayName}
       </div>

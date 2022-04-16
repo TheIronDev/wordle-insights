@@ -67,11 +67,14 @@ export type Word = {
 }
 
 export type CompletedGame = {
+    id?: number,
     attemptCount: number
     isWon: boolean
     word: string
     created: string,
     uid: string,
+    attempt?: string[],
+    hints?: string[],
 }
 
 export type User = {
@@ -80,6 +83,7 @@ export type User = {
     total: number
     wins: number
     losses: number
+    games?: CompletedGame[];
     wins_1_turn: number;
     wins_2_turn: number;
     wins_3_turn: number;

@@ -20,6 +20,7 @@ const createUser = (uid: string): User => ({
   total: 0,
   wins: 0,
   losses: 0,
+  games: [],
   wins_1_turn: 0,
   wins_2_turn: 0,
   wins_3_turn: 0,
@@ -60,8 +61,7 @@ export const getWords = async () => {
       });
 };
 
-
-export const getUserWordStats = async () => {
+export const getUsersWordStats = async () => {
   const gamesSnapshot = await getDocs(collection(db, 'completedGames'));
   const usersMap: Record<string, User> = {};
 
@@ -89,7 +89,43 @@ export const getUserWordStats = async () => {
   });
 
   return Object.values(usersMap)
-      .sort((a, b) => {
-        return b.wins - a.wins;
-      });
+    .sort((a, b) => {
+      return b.wins - a.wins;
+    });
+}
+
+
+export const getUserWordStats = async (userId) => {
+  const gamesSnapshot = await getDocs(collection(db, 'completedGames'));
+  const usersMap: Record<string, User> = {};
+
+  gamesSnapshot.forEach((doc) => {
+    const completedGame = doc.data();
+    const {uid, attemptCount, isWon} = completedGame as CompletedGame;
+    if (!uid) return;
+    if (uid !== userId) return;
+    if (!usersMap[uid]) {
+      usersMap[uid] = createUser(uid);
+    }
+    const user = usersMap[uid];
+    user.total++;
+    if (isWon) {
+      user.wins++;
+      if (attemptCount === 1) user.wins_1_turn++;
+      if (attemptCount === 2) user.wins_2_turn++;
+      if (attemptCount === 3) user.wins_3_turn++;
+      if (attemptCount === 4) user.wins_4_turn++;
+      if (attemptCount === 5) user.wins_5_turn++;
+      if (attemptCount === 6) user.wins_6_turn++;
+    } else {
+      user.losses++;
+    }
+
+    // Not serializable
+    completedGame.created = completedGame?.created?.seconds * 1000;
+    user?.games?.push(<CompletedGame>completedGame);
+    usersMap[uid] = user;
+  });
+
+  return usersMap[userId];
 };

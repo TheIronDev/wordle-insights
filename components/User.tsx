@@ -1,6 +1,7 @@
 import React, {FunctionComponent} from 'react';
 import {User} from './types';
 import styles from '../styles/Words.module.css';
+import Link from 'next/link';
 
 type WordProp = {
   user: User
@@ -35,7 +36,10 @@ const UserComponent: FunctionComponent<WordProp> = ({user}) => {
     6: user.wins_6_turn + ' wins',
   };
 
-  return <li key={user.id} className={styles.wordRow}>
+  return <Link href={'/users/' + user.id}>
+
+  <li key={user.id} className={styles.wordRow}>
+
     <div className={styles.word}>
       {user.displayName}
     </div>
@@ -68,7 +72,9 @@ const UserComponent: FunctionComponent<WordProp> = ({user}) => {
         style={distributionStyles['6']}
         title={distributionTitles['6']}></div>
     </div>
-  </li>;
+  </li>
+
+  </Link>;
 };
 
 export default UserComponent;
