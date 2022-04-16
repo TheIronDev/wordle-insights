@@ -22,7 +22,6 @@ type HomePageProps = {
 
 const Home: NextPage<HomePageProps> =
   ({words, currentUser}: { words: Word[], currentUser: User }) => {
-    console.log(currentUser);
     const [user, setUser] = useState(currentUser as User);
     onAuthStateChanged(auth, (authUser) => {
       if (user?.uid === authUser?.uid) return;
