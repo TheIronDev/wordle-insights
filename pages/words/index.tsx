@@ -77,7 +77,7 @@ export async function getServerSideProps() {
 
   const words = Object.values(wordsMap)
       .sort((a, b) => {
-        return b.wins - a.wins;
+        return (b.wins - b.losses) - (a.wins - a.losses);
       });
 
   // Pass data to the page via props
