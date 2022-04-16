@@ -65,3 +65,9 @@ export type Word = {
     wins_5_turn: number;
     wins_6_turn: number;
 }
+
+export type CompletedGame = {
+    attemptCount: number
+    isWon: boolean
+    word: string
+}

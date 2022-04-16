@@ -23,7 +23,10 @@
     max-width: 2rem;
 }
 
-.login,
+.login {
+
+}
+
 .logout {
     background: none;
     border: none;
@@ -32,7 +35,7 @@
     max-height: 2rem;
     max-width: 2rem;
 }
-.login:hover {
+.logout:hover {
   background: #fff;
 }
 

@@ -1,1 +1,10 @@
-.container {}
+.container {
+    text-align: center;
+}
+
+.login {
+    cursor: pointer;
+    display: block;
+    max-height: 3rem;
+    margin: 1rem auto;
+}

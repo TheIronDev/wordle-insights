@@ -3,26 +3,9 @@ import type {NextPage} from 'next';
 import {db} from '../../firebase';
 import {collection, getDocs} from 'firebase/firestore';
 import styles from '../../styles/Words.module.css';
-import WordListComponent from "../../components/WordList";
-
-
-type Word = {
-  id: string;
-  wins: number
-  losses: number
-  wins_1_turn: number;
-  wins_2_turn: number;
-  wins_3_turn: number;
-  wins_4_turn: number;
-  wins_5_turn: number;
-  wins_6_turn: number;
-}
-
-type CompletedGame = {
-  attemptCount: number
-  isWon: boolean
-  word: string
-}
+import WordListComponent from '../../components/WordList';
+import {CompletedGame, Word} from '../../components/types';
+import { getWords } from '../../data';
 
 type WordPageProps = {
   words: Word[]
@@ -36,49 +19,9 @@ const WordsPage: NextPage<WordPageProps> = ({words}: { words: Word[] }) => {
   </div>;
 };
 
-const createWord = (word: string): Word => ({
-  id: word,
-  wins: 0,
-  losses: 0,
-  wins_1_turn: 0,
-  wins_2_turn: 0,
-  wins_3_turn: 0,
-  wins_4_turn: 0,
-  wins_5_turn: 0,
-  wins_6_turn: 0,
-});
-
 // This gets called on every request
 export async function getServerSideProps() {
-  const gamesSnapshot = await getDocs(collection(db, 'completedGames'));
-  const wordsMap: Record<string, Word> = {};
-
-  gamesSnapshot.forEach((doc) => {
-    const completedGame = doc.data();
-    const {word, attemptCount, isWon} = completedGame as CompletedGame;
-    if (!word) return;
-    if (!wordsMap[word]) {
-      wordsMap[word] = createWord(word);
-    }
-    const wordData = wordsMap[word];
-    if (isWon) {
-      wordData.wins++;
-      if (attemptCount === 1) wordData.wins_1_turn++;
-      if (attemptCount === 2) wordData.wins_2_turn++;
-      if (attemptCount === 3) wordData.wins_3_turn++;
-      if (attemptCount === 4) wordData.wins_4_turn++;
-      if (attemptCount === 5) wordData.wins_5_turn++;
-      if (attemptCount === 6) wordData.wins_6_turn++;
-    } else {
-      wordData.losses++;
-    }
-    wordsMap[word] = wordData;
-  });
-
-  const words = Object.values(wordsMap)
-      .sort((a, b) => {
-        return (b.wins - b.losses) - (a.wins - a.losses);
-      });
+  const words = await getWords();
 
   // Pass data to the page via props
   return {props: {words}};

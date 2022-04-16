@@ -56,7 +56,7 @@ const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
   };
 
   if (!game) {
-    return (<div>Start a new game?</div>);
+    return (<div></div>);
   }
 
   const onNewGameClick = () => {
