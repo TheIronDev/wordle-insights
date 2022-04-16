@@ -5,7 +5,6 @@ import GameComponent from '../components/Game';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from '../firebase';
 
-
 type User = {
     uid: string
     displayName: string
