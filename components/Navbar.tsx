@@ -5,6 +5,7 @@ import {doc} from 'firebase/firestore';
 import {auth, db, googleAuthProvider} from '../firebase';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
 import {signInWithPopup, signOut} from 'firebase/auth';
+import {useRouter} from 'next/router';
 
 
 type Profile = {
@@ -51,14 +52,18 @@ type NavbarProps = {
   isLoggedIn: boolean
 }
 const NavbarComponent: FunctionComponent<NavbarProps> = ({uid, isLoggedIn}) => {
+  const router = useRouter();
+
   return (
     <nav className={styles.container}>
       <div className={styles.leftContents}>
         <h1 className={styles.title}>
-        Worldle Insights
+          Wordle Insights
         </h1>
         <Link href="/">
-          <div className={styles.btn}>
+          <div className={[
+            styles.btn,
+            router.pathname === '/' ? styles.activeBtn : ''].join(' ')}>
             <span className={['material-icons'].join(' ')}>
             videogame_asset
             </span>
@@ -66,12 +71,13 @@ const NavbarComponent: FunctionComponent<NavbarProps> = ({uid, isLoggedIn}) => {
           </div>
         </Link>
         <Link href="/words">
-          <div className={styles.btn}>
+          <div className={[
+            styles.btn,
+            router.pathname === '/words' ? styles.activeBtn : ''].join(' ')}>
             <span className={['material-icons'].join(' ')}>
             auto_graph
             </span>
             <span className={styles.btnText}>Word Data</span>
-
           </div>
         </Link>
       </div>

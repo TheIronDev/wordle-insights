@@ -51,18 +51,28 @@
 
 .btn {
     align-items: center;
+    border: 1px solid rgba(0,0,0,.2);
     border-radius: 5px;
     cursor: pointer;
     display: flex;
     justify-content: center;
     margin: 0 5px;
-    padding: 5px;
+    padding: 5px 10px 5px 5px;
 }
-.btn:hover, .btn:active {
+.activeBtn, .btn:hover, .btn:active {
     background: #6e00b7;
     color: #fff
 }
 
 .btnText {
+    margin-left: 5px;
     text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .displayName,
+    .btnText {
+        display: none;
+    }
+    .btn {padding: 2px; margin: 2px}
 }
