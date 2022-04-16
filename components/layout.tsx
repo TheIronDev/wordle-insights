@@ -1,11 +1,9 @@
 import React, {FunctionComponent} from 'react';
 import {useState} from 'react';
-import type {NextPage} from 'next';
 import Head from 'next/head';
-import GameComponent from '../components/Game';
 import styles from '../styles/Home.module.css';
 import {onAuthStateChanged} from 'firebase/auth';
-import {auth, db, googleAuthProvider} from '../firebase';
+import {auth} from '../firebase';
 import NavbarComponent from '../components/Navbar';
 
 
