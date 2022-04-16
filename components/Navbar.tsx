@@ -80,6 +80,16 @@ const NavbarComponent: FunctionComponent<NavbarProps> = ({uid, isLoggedIn}) => {
             <span className={styles.btnText}>Word Data</span>
           </div>
         </Link>
+        <Link href="/users">
+          <div className={[
+            styles.btn,
+            router.pathname === '/users' ? styles.activeBtn : ''].join(' ')}>
+            <span className={['material-icons'].join(' ')}>
+            leaderboard
+            </span>
+            <span className={styles.btnText}>Leaderboard</span>
+          </div>
+        </Link>
       </div>
       <NavbarAuthComponent isLoggedIn={isLoggedIn || false} uid={uid || ''}/>
     </nav>

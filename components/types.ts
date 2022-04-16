@@ -70,4 +70,20 @@ export type CompletedGame = {
     attemptCount: number
     isWon: boolean
     word: string
+    created: string,
+    uid: string,
+}
+
+export type User = {
+    displayName: string;
+    id: string;
+    total: number
+    wins: number
+    losses: number
+    wins_1_turn: number;
+    wins_2_turn: number;
+    wins_3_turn: number;
+    wins_4_turn: number;
+    wins_5_turn: number;
+    wins_6_turn: number;
 }

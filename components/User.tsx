@@ -1,46 +1,46 @@
 import React, {FunctionComponent} from 'react';
-import {Word} from './types';
+import {User} from './types';
 import styles from '../styles/Words.module.css';
 
 type WordProp = {
-  word: Word
+  user: User
 }
 
-const WordComponent: FunctionComponent<WordProp> = ({word}) => {
-  const percent = word.wins ?
-    (word.wins / (word.wins + word.losses) * 100).toFixed(2) :
+const UserComponent: FunctionComponent<WordProp> = ({user}) => {
+  const percent = user.wins ?
+    (user.wins / (user.wins + user.losses) * 100).toFixed(2) :
     0;
   const max = Math.max(
-      word.wins_1_turn,
-      word.wins_2_turn,
-      word.wins_3_turn,
-      word.wins_4_turn,
-      word.wins_5_turn,
-      word.wins_6_turn,
+      user.wins_1_turn,
+      user.wins_2_turn,
+      user.wins_3_turn,
+      user.wins_4_turn,
+      user.wins_5_turn,
+      user.wins_6_turn,
   ) || 1;
   const distributionStyles = {
-    1: {width: (word.wins_1_turn / max) * 100 + '%'},
-    2: {width: (word.wins_2_turn / max) * 100 + '%'},
-    3: {width: (word.wins_3_turn / max) * 100 + '%'},
-    4: {width: (word.wins_4_turn / max) * 100 + '%'},
-    5: {width: (word.wins_5_turn / max) * 100 + '%'},
-    6: {width: (word.wins_6_turn / max) * 100 + '%'},
+    1: {width: (user.wins_1_turn / max) * 100 + '%'},
+    2: {width: (user.wins_2_turn / max) * 100 + '%'},
+    3: {width: (user.wins_3_turn / max) * 100 + '%'},
+    4: {width: (user.wins_4_turn / max) * 100 + '%'},
+    5: {width: (user.wins_5_turn / max) * 100 + '%'},
+    6: {width: (user.wins_6_turn / max) * 100 + '%'},
   };
   const distributionTitles = {
-    1: word.wins_1_turn + ' wins',
-    2: word.wins_2_turn + ' wins',
-    3: word.wins_3_turn + ' wins',
-    4: word.wins_4_turn + ' wins',
-    5: word.wins_5_turn + ' wins',
-    6: word.wins_6_turn + ' wins',
+    1: user.wins_1_turn + ' wins',
+    2: user.wins_2_turn + ' wins',
+    3: user.wins_3_turn + ' wins',
+    4: user.wins_4_turn + ' wins',
+    5: user.wins_5_turn + ' wins',
+    6: user.wins_6_turn + ' wins',
   };
 
-  return <li key={word.id} className={styles.wordRow}>
+  return <li key={user.id} className={styles.wordRow}>
     <div className={styles.word}>
-      {word.id}
+      {user.displayName}
     </div>
     <div className={styles.percent}>
-      {percent}% <sub>({word.wins}/{word.losses})</sub>
+      {percent}% <sub>({user.wins}/{user.losses})</sub>
     </div>
     <div className={styles.distributions}>
       <div
@@ -71,4 +71,4 @@ const WordComponent: FunctionComponent<WordProp> = ({word}) => {
   </li>;
 };
 
-export default WordComponent;
+export default UserComponent;
