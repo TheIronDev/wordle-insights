@@ -1,6 +1,9 @@
-import {collection, getDocs} from 'firebase/firestore';
+import {collection, doc, getDoc, getDocs} from 'firebase/firestore';
 import {db} from '../firebase';
 import {CompletedGame, Word, User} from '../components/types';
+import {document} from 'firebase-functions/lib/providers/firestore';
+import {useDocumentData} from 'react-firebase-hooks/firestore';
+import {Profile} from '../game/types';
 
 const createWord = (word: string): Word => ({
   id: word,
@@ -65,6 +68,15 @@ export const getUsersWordStats = async () => {
   const gamesSnapshot = await getDocs(collection(db, 'completedGames'));
   const usersMap: Record<string, User> = {};
 
+  const profilesSnapshot = await getDocs(collection(db, 'profiles'));
+  const profileMap: Record<string, string> = {};
+  profilesSnapshot.forEach((doc) => {
+    const profile = doc.data() as Profile;
+    if (profile.displayName != null) {
+      profileMap[doc.id] = profile.displayName;
+    }
+  });
+
   gamesSnapshot.forEach((doc) => {
     const completedGame = doc.data();
     const {uid, attemptCount, isWon} = completedGame as CompletedGame;
@@ -88,7 +100,14 @@ export const getUsersWordStats = async () => {
     usersMap[uid] = wordData;
   });
 
+
   return Object.values(usersMap)
+      .map((user) => {
+        if (profileMap[user.id]) {
+          user.displayName = profileMap[user.id];
+        }
+        return user;
+      })
       .sort((a, b) => {
         return b.wins - a.wins;
       });
@@ -129,4 +148,15 @@ export const getUserWordStats = async (userId:string) => {
   });
 
   return usersMap[userId];
+};
+
+export const getUserProfile = async (userId:string) => {
+  const profileRef = doc(db, 'profiles', userId);
+  const profile = await getDoc(profileRef);
+  const profileData = profile.data();
+
+  if (profileData?.created) {
+    profileData.created = profileData?.created?.seconds * 1000;
+  }
+  return profileData;
 };

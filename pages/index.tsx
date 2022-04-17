@@ -4,7 +4,7 @@ import type {NextPage} from 'next';
 import GameComponent from '../components/Game';
 import {onAuthStateChanged, signInWithPopup} from 'firebase/auth';
 import {auth, googleAuthProvider} from '../firebase';
-import {getWords} from '../data';
+import {getUserProfile, getWords} from '../data';
 import {Word} from '../components/types';
 import WordList from '../components/WordList';
 import styles from '../styles/Home.module.css';

@@ -93,3 +93,9 @@ export type User = {
     wins_5_turn: number;
     wins_6_turn: number;
 }
+
+export type Profile = {
+  displayName: string|undefined;
+  photoUrl: string|undefined;
+  userName: string|undefined;
+};
