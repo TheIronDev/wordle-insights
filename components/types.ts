@@ -74,7 +74,8 @@ export type CompletedGame = {
     word: string
     created: string,
     uid: string,
-    attempt?: string[],
+    attempt?: undefined,
+    attempts?: string[],
     hints?: string[],
 }
 

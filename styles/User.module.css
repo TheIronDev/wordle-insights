@@ -1,0 +1,47 @@
+.container {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 1rem 0;
+    text-align: center;
+    width: 100%;
+    max-width: 100%;
+}
+
+.wordRow {
+    align-items: center;
+    display: flex;
+    height: 3rem;
+    justify-content: center;
+    list-style: none;
+    margin: 1rem 2rem;
+}
+
+.word {
+    font-size: 24px;
+    min-width: 6rem;
+}
+
+.percent {
+    margin-right: 1rem;
+    min-width: 6rem;
+}
+
+.distributions {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 10rem;
+}
+
+.distributionPercent {
+    align-items: end;
+    background: green;
+    border-radius: 5px;
+    color: transparent;
+    display: flex;
+    justify-content: flex-start;
+    margin: .5%;
+    min-width: 5px;
+    height: 14%;
+}

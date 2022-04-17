@@ -18,14 +18,24 @@
 .error {border: 1px solid #f00;}
 .default {}
 
+.isMini {
+  font-size: .6rem;
+  height: 1rem;
+  margin: 1px;
+  width: 1rem
+}
+
 @media (max-width: 600px) {
     .container {
-        box-shadow: 1px 1px 3px -1px #aaa;
         margin: 5px;
         height: 0;
         padding-top: 18%;
         position: relative;
         width: 18%;
+    }
+    .isMini {
+        margin: 1px;
+        width: 1rem;
     }
 
     .letter {

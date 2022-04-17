@@ -1,10 +1,9 @@
 import React from 'react';
 import type {NextPage} from 'next';
-import styles from '../../styles/Words.module.css';
-import {User, Word} from '../../components/types';
-import {getUsersWordStats, getUserWordStats} from '../../data';
-import UserListComponent from '../../components/UserList';
-import CompletedGamesListComponent from "../../components/CompletedGamesList";
+import styles from '../../styles/User.module.css';
+import {User} from '../../components/types';
+import {getUserWordStats} from '../../data';
+import CompletedGamesListComponent from '../../components/CompletedGamesList';
 
 type UserPageProps = {
   user: User

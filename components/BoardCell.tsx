@@ -2,10 +2,6 @@ import React, {FunctionComponent} from 'react';
 import {Cell, CellState} from './types';
 import styles from '../styles/BoardCell.module.css';
 
-type CellProps = {
-    cell: Cell,
-};
-
 /**
  * @return Css class based on the cell state
  */
@@ -26,10 +22,22 @@ function getCellStyle(cellState: CellState): string {
   }
 }
 
-const CellComponent: FunctionComponent<CellProps> = ({cell}) => (
-  <div className={[styles.container, getCellStyle(cell?.state)].join(' ')}>
-    <span className={styles.letter}>{cell?.value}</span>
-  </div>
-);
+type CellProps = {
+  cell: Cell,
+  isMini?: boolean,
+};
 
-export default CellComponent;
+const BoardCellComponent: FunctionComponent<CellProps> =
+  ({cell, isMini = false}) => {
+    const className = [
+      styles.container,
+      getCellStyle(cell?.state),
+    isMini ? styles.isMini : '',
+    ].join(' ');
+
+    return <div className={className}>
+      <span className={styles.letter}>{cell?.value}</span>
+    </div>;
+  };
+
+export default BoardCellComponent;

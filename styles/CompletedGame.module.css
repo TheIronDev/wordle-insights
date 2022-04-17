@@ -1,11 +1,35 @@
 .container {
-    display: flex;
-    justify-content: center;
-    border-bottom: 1px solid #efefef;
+  align-items: center;
+  border-bottom: 1px solid #efefef;
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
 }
 
+.isWon {
+  background: rgba(0,255,0,.1)
+}
+
+.isLoss {
+  background: rgba(255,0,0,.1)
+}
+
+.winLossText {
+    margin-bottom: 1rem;
+}
+
+.miniBoardContainer {
+    display: flex;
+    flex-grow: 1;
+}
 
 .word {
     font-size: 24px;
     min-width: 6rem;
+}
+
+@media (max-width: 600px) {
+    .container {
+      flex-direction: column;
+    }
 }

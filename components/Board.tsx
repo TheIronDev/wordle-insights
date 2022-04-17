@@ -1,12 +1,8 @@
 import React, {FunctionComponent} from 'react';
-import RowComponent from './BoardRow';
-import {Cell, CellState, Game} from './types';
+import BoardRowComponent from './BoardRow';
+import {Cell, CellState, CompletedGame, Game} from './types';
 import styles from '../styles/Board.module.css';
 
-
-type BoardProps = {
-    game: Game,
-};
 
 function getCellState(hintState: string): CellState {
   switch (hintState) {
@@ -49,25 +45,37 @@ function createResultsGrid(attempts: string[], hints: string[]): Cell[][] {
   );
 }
 
-const BoardComponent: FunctionComponent<BoardProps> = ({game}) => {
-  const columns = 5;
-  const rows = 6;
-
-  const results: Cell[][] = [
-    ...createResultsGrid(game.attempts || [], game.hints || []),
-    createResultsRow(game.attempt?.value || '', '', !!game.attempt.isError),
-  ];
-
-  return (
-    <div className={styles.container}>
-      {Array.from({length: rows}, (value, index) => {
-        return <RowComponent
-          key={index}
-          columns={columns}
-          results={results && results[index] || []}/>;
-      })}
-    </div>
-  );
+type BoardProps = {
+  game: Game | CompletedGame,
+  columns?: number,
+  rows?: number,
+  isMini?: boolean
 };
+
+const BoardComponent: FunctionComponent<BoardProps> =
+  ({game, isMini = false, columns = 5, rows = 6}) => {
+    const results: Cell[][] = [
+      ...createResultsGrid(game.attempts || [], game.hints || []),
+    ];
+    if (game?.attempt) {
+      results.push(
+          createResultsRow(
+              game.attempt?.value || '',
+              '',
+              !!game.attempt.isError));
+    }
+
+    return (
+      <div className={styles.container}>
+        {Array.from({length: rows}, (value, index) => {
+          return <BoardRowComponent
+            key={index}
+            isMini={isMini}
+            columns={columns}
+            results={results && results[index] || []}/>;
+        })}
+      </div>
+    );
+  };
 
 export default BoardComponent;

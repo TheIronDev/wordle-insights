@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from 'react';
 import {CompletedGame} from './types';
-import styles from '../styles/Words.module.css';
+import styles from '../styles/CompletedGameList.module.css';
 import CompletedGamesComponent from './CompletedGame';
 
 type CompletedGamesListProps = {
@@ -9,12 +9,12 @@ type CompletedGamesListProps = {
 
 const CompletedGamesListComponent: FunctionComponent<CompletedGamesListProps> =
   ({games}) => (
-    <ul className={styles.container}>
+    <div className={styles.container}>
       {games.map(
           (game: CompletedGame) => {
             return <CompletedGamesComponent key={game.id} game={game}/>;
           })}
-    </ul>
+    </div>
   );
 
 export default CompletedGamesListComponent;
