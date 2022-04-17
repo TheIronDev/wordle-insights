@@ -11,22 +11,23 @@ type UserPageProps = {
   profile: Profile
 }
 
-const UserPage: NextPage<UserPageProps> = ({user, profile}: { user: User, profile: Profile }) => {
-  return <div className={styles.container}>
-    <h1>{profile.displayName}</h1>
-    <div className={styles.quickStats}>
-      <div className={styles.quickStatsText}>
-        <div>Wins: {user.wins}</div>
-        <div>Losses: {user.losses}</div>
-        <div>Total: {user.total}</div>
+const UserPage: NextPage<UserPageProps> =
+  ({user, profile}: { user: User, profile: Profile }) => {
+    return <div className={styles.container}>
+      <h1>{profile.displayName}</h1>
+      <div className={styles.quickStats}>
+        <div className={styles.quickStatsText}>
+          <div>Wins: {user.wins}</div>
+          <div>Losses: {user.losses}</div>
+          <div>Total: {user.total}</div>
+        </div>
+        <div>
+          <WinDistributionChart {...user} />
+        </div>
       </div>
-      <div>
-        <WinDistributionChart {...user} />
-      </div>
-    </div>
-    <CompletedGamesListComponent games={user.games || []} />
-  </div>;
-};
+      <CompletedGamesListComponent games={user.games || []} />
+    </div>;
+  };
 
 // This gets called on every request
 export async function getServerSideProps({params}: {params:any}) {
