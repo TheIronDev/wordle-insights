@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import React from 'react';
 import type {AppProps} from 'next/app';
 import LayoutComponent from '../components/layout';
-import Head from "next/head";
+import Head from 'next/head';
 
 function MyApp({Component, pageProps}: AppProps) {
   const viewportMetadata = [

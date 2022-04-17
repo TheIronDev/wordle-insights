@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from 'react';
 import {Word} from './types';
 import styles from '../styles/Words.module.css';
-import WinDistributionChart from "./WinDistributionChart";
+import WinDistributionChart from './WinDistributionChart';
 
 type WordProp = {
   word: Word

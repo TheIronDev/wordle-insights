@@ -2,7 +2,7 @@ import React, {FunctionComponent} from 'react';
 import {User} from './types';
 import styles from '../styles/User.module.css';
 import Link from 'next/link';
-import WinDistributionChart from "./WinDistributionChart";
+import WinDistributionChart from './WinDistributionChart';
 
 type WordProp = {
   user: User

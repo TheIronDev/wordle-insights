@@ -22,7 +22,7 @@ const getToastContent = (game: Game) => {
   }
 
   return <div></div>;
-}
+};
 
 type GameProps = {
   uid: string
