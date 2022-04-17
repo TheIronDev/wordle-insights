@@ -2,6 +2,7 @@ import React, {FunctionComponent} from 'react';
 import {User} from './types';
 import styles from '../styles/User.module.css';
 import Link from 'next/link';
+import WinDistributionChart from "./WinDistributionChart";
 
 type WordProp = {
   user: User
@@ -45,32 +46,8 @@ const UserComponent: FunctionComponent<WordProp> = ({user}) => {
     <div className={styles.percent}>
       {percent}% <sub>({user.wins}/{user.losses})</sub>
     </div>
-    <div className={styles.distributions}>
-      <div
-        className={styles.distributionPercent}
-        style={distributionStyles['1']}
-        title={distributionTitles['1']}></div>
-      <div
-        className={styles.distributionPercent}
-        style={distributionStyles['2']}
-        title={distributionTitles['2']}></div>
-      <div
-        className={styles.distributionPercent}
-        style={distributionStyles['3']}
-        title={distributionTitles['3']}></div>
-      <div
-        className={styles.distributionPercent}
-        style={distributionStyles['4']}
-        title={distributionTitles['4']}></div>
-      <div
-        className={styles.distributionPercent}
-        style={distributionStyles['5']}
-        title={distributionTitles['5']}></div>
-      <div
-        className={styles.distributionPercent}
-        style={distributionStyles['6']}
-        title={distributionTitles['6']}></div>
-    </div>
+
+    <WinDistributionChart {...user} />
   </li>;
 };
 

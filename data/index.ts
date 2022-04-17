@@ -15,7 +15,7 @@ const createWord = (word: string): Word => ({
 });
 
 const createUser = (uid: string): User => ({
-  displayName: uid.slice(0, 5) + '...', // To fix
+  displayName: 'Anonymous',
   id: uid,
   total: 0,
   wins: 0,
@@ -102,6 +102,7 @@ export const getUserWordStats = async (userId:string) => {
   gamesSnapshot.forEach((doc) => {
     const completedGame = doc.data();
     const {uid, attemptCount, isWon} = completedGame as CompletedGame;
+    completedGame.id = doc.id;
     if (!uid) return;
     if (uid !== userId) return;
     if (!usersMap?.[uid]) {

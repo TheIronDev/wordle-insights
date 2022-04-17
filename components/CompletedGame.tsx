@@ -16,7 +16,7 @@ const CompletedGamesComponent: FunctionComponent<WordProp> = ({game}) => {
     game.isWon ? styles.isWon : styles.isLoss,
   ].join(' ');
 
-  return <div key={game.id} className={className}>
+  return <div className={className}>
     <div>
       <div className={styles.word}>
         {game.word}

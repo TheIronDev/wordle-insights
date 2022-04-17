@@ -68,7 +68,7 @@ export type Word = {
 }
 
 export type CompletedGame = {
-    id?: number,
+    id?: string,
     attemptCount: number
     isWon: boolean
     word: string

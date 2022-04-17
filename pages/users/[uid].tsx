@@ -4,6 +4,7 @@ import styles from '../../styles/User.module.css';
 import {User} from '../../components/types';
 import {getUserWordStats} from '../../data';
 import CompletedGamesListComponent from '../../components/CompletedGamesList';
+import WinDistributionChart from '../../components/WinDistributionChart';
 
 type UserPageProps = {
   user: User
@@ -11,8 +12,17 @@ type UserPageProps = {
 
 const UserPage: NextPage<UserPageProps> = ({user}: { user: User }) => {
   return <div className={styles.container}>
-    <h1>User Page</h1>
-    <sub>TODO</sub>
+    <h1>{user.displayName}</h1>
+    <div className={styles.quickStats}>
+      <div className={styles.quickStatsText}>
+        <div>Wins: {user.wins}</div>
+        <div>Losses: {user.losses}</div>
+        <div>Total: {user.total}</div>
+      </div>
+      <div>
+        <WinDistributionChart {...user} />
+      </div>
+    </div>
     <CompletedGamesListComponent games={user.games || []} />
   </div>;
 };
