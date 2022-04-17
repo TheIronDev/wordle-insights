@@ -1,6 +1,6 @@
 import React from 'react';
 import type {NextPage} from 'next';
-import styles from '../../styles/User.module.css';
+import styles from '../../styles/Words.module.css';
 import {User, Profile, Word} from '../../components/types';
 import {getUserProfile, getUserWordStats, getWordStats} from '../../data';
 import CompletedGamesListComponent from '../../components/CompletedGamesList';
@@ -13,7 +13,7 @@ type WordPageProps = {
 
 const UserPage: NextPage<WordPageProps> =
   ({word}: { word: Word }) => {
-  const backButtonClassName =
+    const backButtonClassName =
     ['material-icons', 'btn', styles.backButton].join(' ');
     return <div className={styles.container}>
       <Link href="/words">

@@ -14,7 +14,8 @@ type UserPageProps = {
 
 const UserPage: NextPage<UserPageProps> =
   ({user, profile}: { user: User, profile: Profile }) => {
-  const backButtonClassName = ['material-icons', 'btn', styles.backButton].join(' ');
+    const backButtonClassName =
+      ['material-icons', 'btn', styles.backButton].join(' ');
     return <div className={styles.container}>
       <Link href="/users">
         <div className={backButtonClassName}>
