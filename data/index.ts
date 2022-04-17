@@ -1,14 +1,14 @@
 import {collection, doc, getDoc, getDocs} from 'firebase/firestore';
 import {db} from '../firebase';
 import {CompletedGame, Word, User} from '../components/types';
-import {document} from 'firebase-functions/lib/providers/firestore';
-import {useDocumentData} from 'react-firebase-hooks/firestore';
 import {Profile} from '../game/types';
 
 const createWord = (word: string): Word => ({
   id: word,
+  total: 0,
   wins: 0,
   losses: 0,
+  games: [],
   wins_1_turn: 0,
   wins_2_turn: 0,
   wins_3_turn: 0,
@@ -44,6 +44,7 @@ export const getWords = async () => {
       wordsMap[word] = createWord(word);
     }
     const wordData = wordsMap[word];
+    wordData.total++;
     if (isWon) {
       wordData.wins++;
       if (attemptCount === 1) wordData.wins_1_turn++;
@@ -55,6 +56,9 @@ export const getWords = async () => {
     } else {
       wordData.losses++;
     }
+
+    completedGame.created = completedGame?.created?.seconds * 1000;
+    wordData.games?.push(<CompletedGame>completedGame);
     wordsMap[word] = wordData;
   });
 
@@ -84,20 +88,20 @@ export const getUsersWordStats = async () => {
     if (!usersMap[uid]) {
       usersMap[uid] = createUser(uid);
     }
-    const wordData = usersMap[uid];
-    wordData.total++;
+    const userData = usersMap[uid];
+    userData.total++;
     if (isWon) {
-      wordData.wins++;
-      if (attemptCount === 1) wordData.wins_1_turn++;
-      if (attemptCount === 2) wordData.wins_2_turn++;
-      if (attemptCount === 3) wordData.wins_3_turn++;
-      if (attemptCount === 4) wordData.wins_4_turn++;
-      if (attemptCount === 5) wordData.wins_5_turn++;
-      if (attemptCount === 6) wordData.wins_6_turn++;
+      userData.wins++;
+      if (attemptCount === 1) userData.wins_1_turn++;
+      if (attemptCount === 2) userData.wins_2_turn++;
+      if (attemptCount === 3) userData.wins_3_turn++;
+      if (attemptCount === 4) userData.wins_4_turn++;
+      if (attemptCount === 5) userData.wins_5_turn++;
+      if (attemptCount === 6) userData.wins_6_turn++;
     } else {
-      wordData.losses++;
+      userData.losses++;
     }
-    usersMap[uid] = wordData;
+    usersMap[uid] = userData;
   });
 
 
@@ -113,6 +117,42 @@ export const getUsersWordStats = async () => {
       });
 };
 
+
+export const getWordStats = async (wordId:string) => {
+  const gamesSnapshot = await getDocs(collection(db, 'completedGames'));
+  const wordMap: Record<string, Word> = {};
+
+  gamesSnapshot.forEach((doc) => {
+    const completedGame = doc.data();
+    const {word, attemptCount, isWon} = completedGame as CompletedGame;
+    completedGame.id = doc.id;
+    if (!word) return;
+    if (word !== wordId) return;
+    if (!wordMap?.[word]) {
+      wordMap[word] = createWord(word);
+    }
+    const wordData = wordMap?.[word];
+    wordData.total++;
+    if (isWon) {
+      wordData.wins++;
+      if (attemptCount === 1) wordData.wins_1_turn++;
+      if (attemptCount === 2) wordData.wins_2_turn++;
+      if (attemptCount === 3) wordData.wins_3_turn++;
+      if (attemptCount === 4) wordData.wins_4_turn++;
+      if (attemptCount === 5) wordData.wins_5_turn++;
+      if (attemptCount === 6) wordData.wins_6_turn++;
+    } else {
+      wordData.losses++;
+    }
+
+    // Not serializable
+    completedGame.created = completedGame?.created?.seconds * 1000;
+    wordData?.games?.push(<CompletedGame>completedGame);
+    wordMap[word] = wordData;
+  });
+
+  return wordMap[wordId];
+};
 
 export const getUserWordStats = async (userId:string) => {
   const gamesSnapshot = await getDocs(collection(db, 'completedGames'));

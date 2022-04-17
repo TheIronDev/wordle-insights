@@ -65,6 +65,8 @@ export type Word = {
     wins_4_turn: number;
     wins_5_turn: number;
     wins_6_turn: number;
+    games?: CompletedGame[];
+    total: number;
 }
 
 export type CompletedGame = {
@@ -82,9 +84,9 @@ export type CompletedGame = {
 export type User = {
     displayName: string;
     id: string;
-    total: number
-    wins: number
-    losses: number
+    total: number;
+    wins: number;
+    losses: number;
     games?: CompletedGame[];
     wins_1_turn: number;
     wins_2_turn: number;
