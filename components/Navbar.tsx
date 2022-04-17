@@ -1,7 +1,7 @@
 import React, {FunctionComponent} from 'react';
 import Link from 'next/link';
 import styles from '../styles/Navbar.module.css';
-import {doc} from 'firebase/firestore';
+import {doc, setDoc} from 'firebase/firestore';
 import {auth, db, googleAuthProvider} from '../firebase';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
 import {signInWithPopup, signOut} from 'firebase/auth';
@@ -35,6 +35,11 @@ const NavbarAuthComponent: FunctionComponent<NavbarAuthProps> =
     const profileRef = doc(db, 'profiles', uid);
     const [profileDocumentData] = useDocumentData(profileRef);
     const profile = profileDocumentData as Profile;
+    const onProfileNameChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+      setDoc(
+          profileRef,
+          {...profileDocumentData, displayName: ev.target.value});
+    };
 
     return <div className={styles.profile}>
 
@@ -42,7 +47,7 @@ const NavbarAuthComponent: FunctionComponent<NavbarAuthProps> =
         <img className={styles.profilePic} src={profile?.photoUrl}/>
       </Link>
       <div className={styles.displayName}>
-        {profile?.displayName}
+        <input value={profile?.displayName} onChange={onProfileNameChange} />
       </div>
       <button onClick={() => signOut(auth)} className={styles.logout}>
         <span className="material-icons">logout</span>
