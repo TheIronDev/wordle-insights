@@ -65,10 +65,10 @@
 }
 
 .btnText {
+    cursor: pointer;
     margin-left: 5px;
     text-decoration: underline;
 }
-
 @media (max-width: 600px) {
     .displayName,
     .btnText {

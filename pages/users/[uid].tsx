@@ -5,6 +5,7 @@ import {User, Profile} from '../../components/types';
 import {getUserProfile, getUserWordStats} from '../../data';
 import CompletedGamesListComponent from '../../components/CompletedGamesList';
 import WinDistributionChart from '../../components/WinDistributionChart';
+import Link from 'next/link';
 
 type UserPageProps = {
   user: User,
@@ -13,8 +14,14 @@ type UserPageProps = {
 
 const UserPage: NextPage<UserPageProps> =
   ({user, profile}: { user: User, profile: Profile }) => {
+  const backButtonClassName = ['material-icons', 'btn', styles.backButton].join(' ');
     return <div className={styles.container}>
-      <h1>{profile.displayName}</h1>
+      <Link href="/users">
+        <div className={backButtonClassName}>
+          arrow_back
+        </div>
+      </Link>
+      <h1 className={styles.displayName}>{profile.displayName}</h1>
       <div className={styles.quickStats}>
         <div className={styles.quickStatsText}>
           <div>Wins: {user.wins}</div>

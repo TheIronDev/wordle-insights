@@ -65,17 +65,19 @@ const NavbarComponent: FunctionComponent<NavbarProps> = ({uid, isLoggedIn}) => {
   return (
     <nav className={styles.container}>
       <div className={styles.leftContents}>
-        <h1 className={styles.title}>
-          Wordle Insights
-        </h1>
+        <Link href="/">
+          <h1 className={[styles.title, styles.btnText].join(' ')}>
+            Wordle Insights
+          </h1>
+        </Link>
         <Link href="/">
           <div className={[
             styles.btn,
+            'mobileOnly',
             router.pathname === '/' ? styles.activeBtn : ''].join(' ')}>
             <span className={['material-icons'].join(' ')}>
-            videogame_asset
+            home
             </span>
-            <span className={styles.btnText}>Home / Game</span>
           </div>
         </Link>
         <Link href="/words">

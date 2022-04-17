@@ -16,9 +16,19 @@
     margin: 1rem 2rem;
 }
 
-.word {
+.displayName {
     font-size: 24px;
     min-width: 6rem;
+    max-width: 10rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+h1.displayName {
+    font-size: 24px;
+    max-width: 80%;
+    margin: 0 auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .percent {
@@ -37,4 +47,11 @@
     display: flex;
     flex-direction: column;
     margin-right: 1rem;
+}
+
+.backButton {
+  border-color: #333;
+  color: #333;
+  float: left;
+  margin-left: 1rem;
 }
