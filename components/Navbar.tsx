@@ -1,7 +1,7 @@
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, useState} from 'react';
 import Link from 'next/link';
 import styles from '../styles/Navbar.module.css';
-import {doc, setDoc} from 'firebase/firestore';
+import {doc, getDoc, setDoc} from 'firebase/firestore';
 import {auth, db, googleAuthProvider} from '../firebase';
 import {useDocumentData} from 'react-firebase-hooks/firestore';
 import {signInWithPopup, signOut} from 'firebase/auth';
@@ -31,13 +31,35 @@ const NavbarAuthComponent: FunctionComponent<NavbarAuthProps> =
         </div>
       );
     }
+
     const profileRef = doc(db, 'profiles', uid);
     const [profileDocumentData] = useDocumentData(profileRef);
-    const profile = profileDocumentData as Profile;
+    let profileData = profileDocumentData as Profile;
+
+    const [currentUser, setCurrentUser] = useState({
+      displayName: '',
+    });
+    getDoc(profileRef).then(doc => {
+      profileData = doc.data() as Profile;
+      setCurrentUser({
+        displayName: profileData.displayName,
+      });
+    });
+
+
+    let debounce: number;
     const onProfileNameChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-      setDoc(
-          profileRef,
-          {...profileDocumentData, displayName: ev.target.value});
+      const value = ev.target.value;
+      setCurrentUser({
+        displayName: value,
+      });
+
+      if (debounce) clearTimeout(debounce);
+      debounce = setTimeout(() => {
+        setDoc(
+            profileRef,
+            {...profileData, displayName: value});
+      }, 100);
     };
 
     return <div className={styles.profile}>
@@ -49,7 +71,7 @@ const NavbarAuthComponent: FunctionComponent<NavbarAuthProps> =
         <input
           id="displayname"
           maxLength={10}
-          value={profile?.displayName}
+          value={currentUser.displayName}
           onChange={onProfileNameChange} />
         <label className="material-icons" htmlFor="displayname">edit</label>
       </div>
