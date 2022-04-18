@@ -39,7 +39,7 @@ const NavbarAuthComponent: FunctionComponent<NavbarAuthProps> =
     const [currentUser, setCurrentUser] = useState({
       displayName: '',
     });
-    getDoc(profileRef).then(doc => {
+    getDoc(profileRef).then((doc) => {
       profileData = doc.data() as Profile;
       setCurrentUser({
         displayName: profileData.displayName,
