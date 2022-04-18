@@ -1,0 +1,15 @@
+.container {
+    text-align: center;
+}
+
+.builtWith {
+    margin: 1rem;
+    max-height: 100px;
+    max-width: 50%;
+}
+
+.section {
+    border-bottom: 1px solid #aaa;
+    box-shadow: 0 1px 1px #efefef;
+    padding: 1rem;
+}

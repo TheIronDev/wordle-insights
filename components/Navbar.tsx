@@ -101,7 +101,7 @@ const NavbarComponent: FunctionComponent<NavbarProps> = ({uid, isLoggedIn}) => {
             styles.btn,
             'mobileOnly',
             router.pathname === '/' ? styles.activeBtn : ''].join(' ')}>
-            <span className={['material-icons'].join(' ')}>
+            <span className={'material-icons'}>
             home
             </span>
           </div>
@@ -110,7 +110,7 @@ const NavbarComponent: FunctionComponent<NavbarProps> = ({uid, isLoggedIn}) => {
           <div className={[
             styles.btn,
             router.pathname === '/words' ? styles.activeBtn : ''].join(' ')}>
-            <span className={['material-icons'].join(' ')}>
+            <span className={'material-icons'}>
             auto_graph
             </span>
             <span className={styles.btnText}>Word Data</span>
@@ -120,10 +120,20 @@ const NavbarComponent: FunctionComponent<NavbarProps> = ({uid, isLoggedIn}) => {
           <div className={[
             styles.btn,
             router.pathname === '/users' ? styles.activeBtn : ''].join(' ')}>
-            <span className={['material-icons'].join(' ')}>
+            <span className={'material-icons'}>
             leaderboard
             </span>
             <span className={styles.btnText}>Leaderboard</span>
+          </div>
+        </Link>
+        <Link href="/about">
+          <div className={[
+            styles.btn,
+            router.pathname === '/about' ? styles.activeBtn : ''].join(' ')}>
+            <span className={'material-icons'}>
+            info
+            </span>
+            <span className={styles.btnText}>About</span>
           </div>
         </Link>
       </div>
