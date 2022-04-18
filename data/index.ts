@@ -57,6 +57,7 @@ export const getWords = async () => {
     }
 
     completedGame.created = completedGame?.created?.seconds * 1000;
+    completedGame.completed = completedGame?.completed?.seconds * 1000;
     wordData.games?.push(<CompletedGame>completedGame);
     wordsMap[word] = wordData;
   });
@@ -146,6 +147,7 @@ export const getWordStats = async (wordId:string) => {
 
     // Not serializable
     completedGame.created = completedGame?.created?.seconds * 1000;
+    completedGame.completed = completedGame?.completed?.seconds * 1000;
     wordData?.games?.push(<CompletedGame>completedGame);
     wordMap[word] = wordData;
   });
@@ -182,6 +184,7 @@ export const getUserWordStats = async (userId:string) => {
 
     // Not serializable
     completedGame.created = completedGame?.created?.seconds * 1000;
+    completedGame.completed = completedGame?.completed?.seconds * 1000;
     user?.games?.push(<CompletedGame>completedGame);
     usersMap[uid] = user;
   });
