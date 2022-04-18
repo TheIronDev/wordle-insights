@@ -15,9 +15,12 @@ const UserComponent: FunctionComponent<WordProp> = ({user}) => {
 
   return <li key={user.id} className={styles.wordRow}>
     <Link href={'/users/' + user.id}>
-      <a className={styles.displayName}>
-        {user.displayName}
-      </a>
+      <div className={styles.profileInfo}>
+        <span className="material-icons">account_circle</span>
+        <a className={styles.displayName}>
+          {user.displayName}
+        </a>
+      </div>
     </Link>
     <div className={styles.percent}>
       {percent}% <sub>({user.wins}/{user.losses})</sub>

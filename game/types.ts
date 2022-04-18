@@ -3,7 +3,6 @@ export type User = {
 };
 export type Profile = {
   displayName: string|undefined,
-  photoUrl: string|undefined,
   userName: string|undefined,
   created: FirebaseFirestore.Timestamp,
 };

@@ -55,3 +55,10 @@ h1.displayName {
   float: left;
   margin-left: 1rem;
 }
+
+.profileInfo {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  margin-right: 1rem;
+}

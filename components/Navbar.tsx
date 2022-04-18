@@ -10,7 +10,6 @@ import {useRouter} from 'next/router';
 
 type Profile = {
   displayName: string
-  photoUrl: string
   userName: string
 }
 
@@ -44,10 +43,15 @@ const NavbarAuthComponent: FunctionComponent<NavbarAuthProps> =
     return <div className={styles.profile}>
 
       <Link href={'/users/' + uid}>
-        <img className={styles.profilePic} src={profile?.photoUrl}/>
+        <span className="material-icons btn">person</span>
       </Link>
       <div className={styles.displayName}>
-        <input value={profile?.displayName} onChange={onProfileNameChange} />
+        <input
+          id="displayname"
+          maxLength={10}
+          value={profile?.displayName}
+          onChange={onProfileNameChange} />
+        <label className="material-icons" htmlFor="displayname">edit</label>
       </div>
       <button onClick={() => signOut(auth)} className={styles.logout}>
         <span className="material-icons">logout</span>

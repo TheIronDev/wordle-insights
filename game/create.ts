@@ -101,9 +101,8 @@ export const createProfile = (
     user: UserRecord,
     timestamp: FirebaseFirestore.Timestamp): Profile => {
   return {
-    displayName: user.displayName,
+    displayName: 'New User',
     userName: user.uid,
-    photoUrl: user.photoURL,
     created: timestamp,
   };
 };

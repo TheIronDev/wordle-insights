@@ -40,7 +40,11 @@
 }
 
 .displayName {
-    margin: 0 .5rem;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  display: flex;
+  margin: 0 .5rem;
+  overflow: hidden;
 }
 
 .leftContents {
