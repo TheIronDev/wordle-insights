@@ -18,7 +18,7 @@ const UserComponent: FunctionComponent<WordProp> = ({user}) => {
       <div className={styles.profileInfo}>
         <span className="material-icons">account_circle</span>
         <a className={styles.displayName}>
-          {user.displayName}
+          {user?.displayName || ''}
         </a>
       </div>
     </Link>

@@ -42,7 +42,7 @@ const NavbarAuthComponent: FunctionComponent<NavbarAuthProps> =
     getDoc(profileRef).then((doc) => {
       profileData = doc.data() as Profile;
       setCurrentUser({
-        displayName: profileData.displayName,
+        displayName: profileData?.displayName || '',
       });
     });
 
@@ -71,7 +71,7 @@ const NavbarAuthComponent: FunctionComponent<NavbarAuthProps> =
         <input
           id="displayname"
           maxLength={10}
-          value={currentUser.displayName}
+          value={currentUser?.displayName}
           onChange={onProfileNameChange} />
         <label className="material-icons" htmlFor="displayname">edit</label>
       </div>
