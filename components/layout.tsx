@@ -2,9 +2,8 @@ import React, {FunctionComponent} from 'react';
 import {useState} from 'react';
 import Head from 'next/head';
 import {onAuthStateChanged} from 'firebase/auth';
-import {auth, db} from '../firebase';
+import {auth} from '../firebase';
 import NavbarComponent from '../components/Navbar';
-import {doc} from "firebase/firestore";
 
 
 type User = {
