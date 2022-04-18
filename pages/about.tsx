@@ -37,7 +37,7 @@ const AboutPage: NextPage<AboutPageProps> = () => {
 
     </div>
     {/* eslint-disable-next-line max-len */}
-    <p>This has no affiliation with the <a href="https://www.nytimes.com/games/wordle/index.html">New York Time's Wordle game</a>.</p>
+    <p>This has no affiliation with the <a href="https://www.nytimes.com/games/wordle/index.html">New York Times Wordle game</a>.</p>
   </div>;
 };
 
