@@ -3,7 +3,7 @@ import {db} from '../firebase';
 import {CompletedGame, Word, User} from '../components/types';
 import {Profile} from '../game/types';
 
-const createWord = (word: string): Word => ({
+export const createWord = (word: string): Word => ({
   id: word,
   total: 0,
   wins: 0,
@@ -16,8 +16,7 @@ const createWord = (word: string): Word => ({
   wins_5_turn: 0,
   wins_6_turn: 0,
 });
-
-const createUser = (uid: string): User => ({
+export const createUser = (uid: string): User => ({
   displayName: 'Anonymous',
   id: uid,
   total: 0,

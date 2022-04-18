@@ -2,7 +2,7 @@ import React from 'react';
 import type {NextPage} from 'next';
 import styles from '../../styles/Words.module.css';
 import {User, Profile, Word} from '../../components/types';
-import {getUserProfile, getUserWordStats, getWordStats} from '../../data';
+import {createWord, getWordStats} from '../../data';
 import CompletedGamesListComponent from '../../components/CompletedGamesList';
 import WinDistributionChart from '../../components/WinDistributionChart';
 import Link from 'next/link';
@@ -36,9 +36,21 @@ const UserPage: NextPage<WordPageProps> =
     </div>;
   };
 
+const validCharacters = 'abcdefghijklmnopqrstuvwxyz';
+
 // This gets called on every request
 export async function getServerSideProps({params}: {params:any}) {
-  const word = await getWordStats(params.uid);
+  const wordValue = (params.word || '') as string;
+  if (!wordValue) throw new Error('No word provided');
+  if (wordValue?.length !== 5) throw new Error('Invalid word');
+  if (!wordValue
+      .toLowerCase()
+      .split('')
+      .every((val) => validCharacters.indexOf(val) !== -1)) {
+    throw new Error('Invalid characters');
+  }
+
+  const word = await getWordStats(wordValue) || createWord(wordValue);
 
   // Pass data to the page via props
   return {props: {word}};
