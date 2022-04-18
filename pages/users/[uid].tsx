@@ -2,7 +2,7 @@ import React from 'react';
 import type {NextPage} from 'next';
 import styles from '../../styles/User.module.css';
 import {User, Profile} from '../../components/types';
-import {getUserProfile, getUserWordStats} from '../../data';
+import {createUser, getUserProfile, getUserWordStats} from '../../data';
 import CompletedGamesListComponent from '../../components/CompletedGamesList';
 import WinDistributionChart from '../../components/WinDistributionChart';
 import Link from 'next/link';
@@ -39,7 +39,7 @@ const UserPage: NextPage<UserPageProps> =
 
 // This gets called on every request
 export async function getServerSideProps({params}: {params:any}) {
-  const user = await getUserWordStats(params.uid);
+  const user = await getUserWordStats(params.uid) || createUser(params.uid);
   const profile = await getUserProfile(params.uid);
 
   // Pass data to the page via props

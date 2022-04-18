@@ -5,7 +5,7 @@ import {Game, KeyboardHints, KeyboardKey, KeyboardKeyType} from './types';
 import styles from '../styles/Game.module.css';
 import {doc, DocumentData, DocumentReference, setDoc} from 'firebase/firestore';
 import {db} from '../firebase';
-import {useDocumentData} from 'react-firebase-hooks/firestore';
+import {useDocument, useDocumentData} from 'react-firebase-hooks/firestore';
 import useEventListener from '@use-it/event-listener';
 
 
@@ -66,8 +66,8 @@ const onKeyClick = (
 
 const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
   const gameRef = doc(db, 'games', uid);
-  const [gameDocumentData] = useDocumentData(gameRef);
-  const game = gameDocumentData as Game;
+  const [gameDocument] = useDocument(gameRef);
+  const game = gameDocument?.data() as Game;
 
   const keyboardClickCallback = (keyboardKey: KeyboardKey) => {
     if (!game) return;
@@ -98,7 +98,9 @@ const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
   useEventListener('keydown', keyboardKeydownCallback);
 
   if (!game) {
-    return (<div></div>);
+    return <h2>
+      Loading your game (may take a minute for the first time...)
+    </h2>;
   }
 
   const onNewGameClick = () => {
