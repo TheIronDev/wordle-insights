@@ -54,8 +54,8 @@ const NavbarAuthComponent: FunctionComponent<NavbarAuthProps> =
         displayName: value,
       });
 
-      if (debounce) clearTimeout(debounce);
-      debounce = setTimeout(() => {
+      if (debounce) window.clearTimeout(debounce);
+      debounce = window.setTimeout(() => {
         setDoc(
             profileRef,
             {...profileData, displayName: value});
