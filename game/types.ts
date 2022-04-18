@@ -19,6 +19,7 @@ export type KeyboardHintMap = {
 export type Game = {
   attempt: Attempt,
   attempts: string[],
+  created: FirebaseFirestore.Timestamp,
   hints: string[],
   keyboardHints: KeyboardHintMap,
   isNewGameRequested: boolean,

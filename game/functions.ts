@@ -75,16 +75,16 @@ export const onUserCreated = auth.user().onCreate((user, context) => {
   });
 });
 
-export const gameAttemptTest = https.onRequest((req, res) => {
-  const uid = 'test';
-  getNewWordForUser(uid)
-      .then((newWord) => {
-        const newGame = createGame(newWord, admin.firestore.Timestamp.now());
-        db.collection('games').doc(uid).set(newGame);
-
-        res.json(newGame);
-      });
-});
+// export const gameAttemptTest = https.onRequest((req, res) => {
+//   const uid = 'test';
+//   getNewWordForUser(uid)
+//       .then((newWord) => {
+//         const newGame = createGame(newWord, admin.firestore.Timestamp.now());
+//         db.collection('games').doc(uid).set(newGame);
+//
+//         res.json(newGame);
+//       });
+// });
 
 export const gameAttempt = firestore.document('games/{uid}')
     .onUpdate((change, context) => {
