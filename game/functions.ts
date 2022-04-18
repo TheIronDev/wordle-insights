@@ -94,7 +94,7 @@ export const gameAttempt = firestore.document('games/{uid}')
         return;
       }
 
-      if (updatedGame.isComplete && reducedGame.isComplete) {
+      if (updatedGame?.isComplete && reducedGame?.isComplete) {
         const uid = change.after.id;
         db.collection('completedGames')
             .add(createCompletedGame(

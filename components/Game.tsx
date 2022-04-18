@@ -31,7 +31,8 @@ type GameProps = {
 const onKeyClick = (
     keyboardKey: KeyboardKey,
     gameData: Game, gameRef: DocumentReference<DocumentData>) => {
-  if (gameData.isComplete) return;
+  if (!gameData) return;
+  if (gameData?.isComplete) return;
 
   let attemptValue = gameData.attempt.value;
   const attempt = {...gameData.attempt};
@@ -69,12 +70,14 @@ const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
   const game = gameDocumentData as Game;
 
   const keyboardClickCallback = (keyboardKey: KeyboardKey) => {
-    if (game.isComplete) return;
+    if (!game) return;
+    if (game?.isComplete) return;
     onKeyClick(keyboardKey, game as Game, gameRef);
   };
 
   const keyboardKeydownCallback = (ev: KeyboardEvent) => {
-    if (game.isComplete) return;
+    if (!game) return;
+    if (game?.isComplete) return;
     let keyboardKey;
     switch (ev.key) {
       case 'Enter':
@@ -102,7 +105,7 @@ const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
     setDoc(gameRef, Object.assign({}, game, {isNewGameRequested: true}));
   };
 
-  const newGameSection = game.isComplete ?
+  const newGameSection = game?.isComplete ?
     <button
       className={styles.newGameButton}
       onClick={() => onNewGameClick()}>
@@ -110,7 +113,7 @@ const GameComponent: FunctionComponent<GameProps> = ({uid}) => {
     </button> :
     <span></span>;
 
-  const containerClass = game.attempt.isChecking ?
+  const containerClass = game?.attempt?.isChecking ?
       [styles.container, styles.loading].join(' ') :
       styles.container;
 
