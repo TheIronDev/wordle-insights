@@ -6,7 +6,7 @@ type AboutPageProps = {}
 
 const AboutPage: NextPage<AboutPageProps> = () => {
   return <div className={styles.container}>
-    <h1>About Word Insights</h1>
+    <h1>About Word Insights HELLO TEST</h1>
     <div className={styles.section}>
       {/* eslint-disable-next-line max-len */}
       <p>This is a user-driven wordle-like clone that records and openly displays data.</p>
