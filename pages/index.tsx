@@ -35,7 +35,7 @@ const Home: NextPage<HomePageProps> =
     return user && user.uid ?
     <GameComponent uid={user.uid} /> :
       <div className={styles.container}>
-        <h1>Wordle Word Data</h1>
+        <h1>Wordle Word Data NOW WITH PREVIEW CHANNEL</h1>
         <div>User generated data</div>
         <sub>Play a few games to add more data</sub>
         <img
