@@ -8,7 +8,7 @@
     "dev": "next-remote-watch",
     "start": "next start",
     "lint": "next lint",
-    "build": "next build",
+    "build": "tsc && next build",
     "emulate": "tsc && firebase emulators:start",
     "serve": "npm run build && firebase emulators:start --only functions,hosting",
     "deploy": "tsc && npm run build && firebase deploy"
